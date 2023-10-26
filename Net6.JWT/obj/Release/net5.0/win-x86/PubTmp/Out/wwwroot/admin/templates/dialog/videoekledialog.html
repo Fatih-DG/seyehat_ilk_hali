@@ -1,0 +1,43 @@
+﻿<style>
+    md-content {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+        min-width:400px;
+    }
+</style>
+
+
+
+<div style="min-width:400px;">
+    <form ng-submit="ekle(video);">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h3>
+                    <span>Video Ekleme</span></span>
+                </h3>
+            </div>
+        </md-toolbar>
+        <md-content flex layout-padding>
+
+            <md-input-container class="md-block">
+                <label>Video iframe</label>
+                <input required md-no-asterisk name="Video" type="text" ng-model="video">
+
+            </md-input-container>
+            <div ng-show="isHTML(video)">
+                <span ng-bind-html="video | unsafe"></span>
+
+            </div>
+            <md-dialog-actions layout="row">
+                <md-button ng-click="cancel();">
+                    Kapat
+                </md-button>
+                <md-button type="submit" >
+                    Ekle
+                </md-button>
+            </md-dialog-actions>
+        </md-content>
+    </form>
+</div>

@@ -1,0 +1,48 @@
+﻿
+<div class="row" >
+
+
+    <div class="col-lg-12"  >
+        <div class="pull-right">
+            <md-checkbox ng-model="tumunuSec" ng-change="tumunuSec2(tumunuSec);">{{'TUMUNUSEC' | translate}}</md-checkbox>
+            <md-button ng-click="sil()" class="md-icon-button" aria-label="More" ng-show="butonGorunurlugu(mesajlar)">
+                <i class="fa-2x fas fa-trash"></i>
+            </md-button>
+
+        </div>
+        </div>
+
+    
+
+</div>
+<br />
+<br />
+<div>
+   
+    <div   dir-paginate="mesaj in mesajlar | itemsPerPage: sayfaBoyutu" total-items="toplam">
+        <div class="row">
+            <div class="col-lg-12">
+                <br />
+                <div >
+                    <md-checkbox ng-model='mesajlar[$index].selected' ng-change="tumunuSeciliMi(mesajlar[$index].selected);"></md-checkbox>
+
+                    
+                    <span style="cursor:pointer;" ng-style="{'color':mesajlar[$index].selected ? 'blue' : 'black' }" ng-click="mesajGoster(mesaj,$index);$event.stopPropagation();" ng-style="mesaj.okunduMu?'':{'font-weight':'bolder'}">{{mesaj.adSoyad}} <span style="margin-left:30px;">{{mesaj.konu}}</span> <span style="color: #aeb2b7;margin-left:30px;font-size:12px">{{mesaj.mesaj | substr:50}}</span> <span class="pull-right">{{mesaj.tarih | date : "HH.mm / dd.MM.y" }}</span></span>
+               <br />
+                 </div>
+                 </div>
+        </div>
+        <md-divider></md-divider>
+    </div>
+        </div>
+
+      
+
+      
+<dir-pagination-controls max-size="1"
+                         direction-links="true"
+                         boundary-links="true"
+                         on-page-change="sayfaGetir(newPageNumber, sayfaBoyutu)" template-url="templates/dirPagination.tpl.html" layout="column" layout-align="center center">
+</dir-pagination-controls>
+
+

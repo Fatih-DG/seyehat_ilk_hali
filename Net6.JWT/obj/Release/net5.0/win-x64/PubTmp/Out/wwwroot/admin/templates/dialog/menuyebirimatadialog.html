@@ -1,0 +1,51 @@
+﻿
+
+<md-dialog  layout="column" >
+    <div>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h3>
+                    <span style="font-size:12pt">{{"BIRIMATAMADIALOGBASLIK" | translate}}</span>
+                </h3>
+            </div>
+        </md-toolbar>
+        <md-content flex layout-padding>
+            <div layout="row" >
+                
+                <ul>
+                    <li><i style="font-size: 5pt;padding: 1px 1px;color: deepskyblue;position:absolute;margin-top:5px;" class="fas fa-circle"></i> <input ng-model="ziyaretciler" ng-change="birimleriSec2([9999],ziyaretciler)" style="margin-left:10px;" type="checkbox" ng-value="ziyaretciler=birimTipiSecilmisMi([9999])">  <span role="button" tabindex="0">Ziyaretçiler</span></li>
+                    <li><i style="font-size: 5pt;padding: 1px 1px;color: deepskyblue;position:absolute;margin-top:5px;" class="fas fa-circle"></i> <input ng-model="ogrenciler" ng-change="birimleriSec2([3913],ogrenciler)" style="margin-left:10px;" type="checkbox" ng-value="ogrenciler=birimTipiSecilmisMi([3913])">  <span role="button" tabindex="0">Öğrenciler</span></li>
+
+
+                </ul>
+            </div>
+                <div layout="row" >
+                  
+                    <div data-angular-treeview="true"
+                         data-tree-id="abc"
+                         data-tree-model="tumBirimler.children"
+                         data-node-id="id" data-new-model="yeniModel"
+                         data-node-label="birimAdi"
+                         data-node-children="children" data-dragable="false" secilebilirmi="true" change="change(node)">
+                    </div>
+
+
+
+                </div>
+
+
+
+</md-content>
+
+    </div>
+
+
+    <div layout="row" layout-align="end">
+        <md-button  ng-click="kapat()">
+            {{"KAPAT" | translate}}
+        </md-button>
+        <md-button ng-click="secilenleriKaydet();" type="button">{{"KAYDET" | translate}}</md-button>
+    </div>
+  </md-dialog>
+
+

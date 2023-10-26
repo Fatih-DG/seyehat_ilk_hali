@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Net5.JWT.props" />
+</Project>

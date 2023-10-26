@@ -1,0 +1,174 @@
+﻿
+<md-content>
+
+
+    <div layout-margin="" class="layout-margin ng-scope">
+
+
+        <div layout="row" layout-align="start end">
+
+            <div flex-xs flex-gt-xs="50" layout="column">
+                <md-input-container>
+                    <label>Dönem</label>
+                    <md-select ng-model="seciliDonemId" ng-change='donemDegisti(seciliDonemId)'>
+                        <md-optgroup label="Dönem">
+                            <md-option ng-repeat="donem in donemler" ng-value="donem.id"><b>{{donem.donemAdi}}</b></md-option>
+
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout="row"  flex-xs flex-gt-xs="50" layout-align="end end" ng-hide="yetkinlikler.length==0 || yetkinlikler==undefined || yetkinlikler==null && gorusler.length>0">
+                <md-button class="md-primary" ng-click="$root.goToDiv('aciklama')">Üstünüzün açıklamaları için tıklayınız</md-button>
+            </div>
+         
+        </div>
+
+        <div layout="row" layout-align="center center" ng-if="yetkinlikler.length==0 || yetkinlikler==undefined || yetkinlikler==null ">
+            <p style="text-align:center;"><h3 class="animated infinite pulse"><a style="text-decoration:none;color:red;">{{seciliDonem.donemAdi}} Dönemine  Ait Yetkinlik Bulunamadı.</a></h3></p>
+
+
+
+        </div>
+        <table class="table" border="1" ng-if="yetkinlikler.length>0">
+
+            <caption>{{seciliDonem.donemAdi}} Dönemi Yetkinlikleriniz</caption>
+
+            <thead>
+                <tr>
+                    <th scope="col">Yetkinlik Adı</th>
+                    <th scope="col">Davranışsal Göstergeler</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="yetkinlik in yetkinlikler">
+                    <td data-label="Yetkinlik Adı" style="width:30% ">
+                        <br />
+                        <b><span style="text-decoration:underline;">{{yetkinlik.yetkinlikAdi}}</span></b><br /><span style="font-size:12px;">{{yetkinlik.tanim}}</span>
+                    </td>
+                    <td data-label="Davranışsal Göstergeler">
+                        <br />
+                        <md-radio-group layout="row" ng-disabled="true" ng-model="yetkinlik.seviye" style="margin-top:10px !important;">
+
+                            <md-radio-button value="1" class="md-primary"><b>Seviye 1</b></md-radio-button>
+                            <md-radio-button value="2"><b>Seviye 2 </b></md-radio-button>
+                            <md-radio-button value="3"><b>Seviye 3</b></md-radio-button>
+
+
+
+
+                        </md-radio-group>
+                        <br />
+                        <ul ng-if="yetkinlik.seviye==1"><li ng-repeat="seviye in yetkinlik.seviye1"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==2"><li ng-repeat="seviye in yetkinlik.seviye2"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==3"><li ng-repeat="seviye in yetkinlik.seviye3"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div ng-hide="yetkinlikler.length==0 || yetkinlikler==undefined || yetkinlikler==null && gorusler.length>0">
+    <div layout="row" layout-align="center center" id="aciklama" ng-show="gorusVarMi(3)">
+        <div flex="70" flex-xs="100" flex-gt-md="70" flex-gt-sm="70">
+            <md-toolbar style="background: rgb(76, 175, 80); " md-scroll-shrink>
+                <div class="md-toolbar-tools">
+                    Güçlü Olduğunuz Yönler
+                </div>
+            </md-toolbar>
+
+
+
+            <section>
+              
+                <md-list >
+                    <md-subheader ng-repeat-start="gorus in gorusler" ng-if="gorus.gorusTipi==3" class="md-no-sticky">{{gorus.tarih |  tarihveGunCevirdp}}</md-subheader>
+                    <md-list-item ng-if="gorus.gorusTipi==3">
+
+                        <i class="fas fa-envelope fa-2x"></i>
+
+                        <p style="margin-left:10px;">{{gorus.gorus}}</p>
+
+                    </md-list-item>
+
+                    <md-divider ng-repeat-end></md-divider>
+
+
+                </md-list>
+            </section>
+
+
+
+
+
+
+        </div>
+    </div>
+    <div layout="row" layout-align="center center" ng-show="gorusVarMi(2)">
+        <div flex="70" flex-xs="100" flex-gt-md="70" flex-gt-sm="70">
+            <md-toolbar md-scroll-shrink>
+                <div class="md-toolbar-tools">
+                   Gelişmeye Açık Yönleriniz
+                </div>
+            </md-toolbar>
+
+
+
+            <section>
+           
+                <md-list >
+                    <md-subheader ng-repeat-start="gorus in gorusler" ng-if="gorus.gorusTipi==2" class="md-no-sticky">{{gorus.tarih |  tarihveGunCevirdp}}</md-subheader>
+                    <md-list-item ng-if="gorus.gorusTipi==2">
+
+                        <i class="fas fa-envelope fa-2x"></i>
+
+                        <p style="margin-left:10px;">{{gorus.gorus}}</p>
+
+                    </md-list-item>
+
+                    <md-divider ng-repeat-end></md-divider>
+
+
+                </md-list>
+            </section>
+
+        </div>
+    </div>
+    <div layout="row" layout-align="center center" ng-show="gorusVarMi(1)">
+        <div flex="70" flex-xs="100" flex-gt-md="70" flex-gt-sm="70">
+            <md-toolbar style="background: rgb(244, 67, 54); " md-scroll-shrink>
+                <div class="md-toolbar-tools">
+                    Zayıf Olduğunuz Yönler
+                </div>
+            </md-toolbar>
+
+
+
+            <section>
+               
+                <md-list >
+                    <md-subheader ng-repeat-start="gorus in gorusler" ng-if="gorus.gorusTipi==1" class="md-no-sticky">{{gorus.tarih |  tarihveGunCevirdp}}</md-subheader>
+                    <md-list-item ng-if="gorus.gorusTipi==1">
+
+                        <i class="fas fa-envelope fa-2x"></i>
+
+                        <p style="margin-left:10px;">{{gorus.gorus}}</p>
+
+                    </md-list-item>
+
+                    <md-divider ng-repeat-end></md-divider>
+
+
+                </md-list>
+            </section>
+
+        </div>
+    </div>
+        </div>
+</md-content>
+
+
+

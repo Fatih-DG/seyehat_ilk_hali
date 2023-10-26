@@ -1,0 +1,67 @@
+﻿
+<style>
+    md-content {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
+
+
+
+<md-content  >
+
+
+ 
+    <div layout="row" layout-align="end" flex >
+
+        <md-button class="md-icon-button md-primary" ng-click="kapat()">
+            <i style="color:black;" class="fa fa-2x fa-times" aria-hidden="true"></i>
+        </md-button>
+    </div>
+    <form ng-submit="guncelle(dil)" name="ekleme"layout-padding>
+       
+
+        <md-input-container class="md-block">
+            <label>{{'ACIKLAMA' | translate}}</label>
+            <input md-maxlength="50" required name="ad" ng-model="dil.aciklama">
+
+        </md-input-container>
+
+        <div layout="row">
+            <md-input-container flex="50">
+                <label>{{'KISALTMA' | translate}}</label>
+                <input md-maxlength="50" md-minlength="3" md-no-asterisk placeholder="tr_TR" required ng-model="dil.kisaltma">
+
+            </md-input-container>
+            <md-input-container flex="50">
+                <label>{{'CEVIRIDEGISKENI' | translate}}</label>
+                <input md-maxlength="50" md-minlength="3" md-no-asterisk name="faks" ng-model="dil.ceviriDegiskeni" required>
+
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <md-input-container flex="50">
+                <md-switch class="md-primary" name="special" ng-model="dil.aktifMi" required>
+                    {{'AKTIFMI' | translate}}
+                </md-switch>
+
+            </md-input-container>
+            <md-input-container flex="50">
+                <md-switch class="md-primary" name="special" ng-model="dil.sistemDiliMi" required>
+                    {{'SISTEMDILIMI' | translate}}
+                </md-switch>
+
+            </md-input-container>
+        </div>
+
+
+
+        <div layout="row" layout-align="end" flex>
+
+            <md-button class="md-raised md-primary" type="submit">{{"GUNCELLE" | translate}}</md-button>
+        </div>
+
+    </form>
+</md-content>

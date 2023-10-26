@@ -1,0 +1,161 @@
+﻿
+<md-content>
+
+     
+    <div layout-margin="" class="layout-margin ng-scope">
+
+
+        <div layout="row" layout-align="start">
+
+            <div flex-xs flex-gt-xs="50" layout="column">
+                <md-input-container>
+                    <label>Dönem</label>
+                    <md-select ng-model="seciliDonemId" ng-change='donemDegisti(seciliDonemId)' >
+                        <md-optgroup label="Dönem">
+                            <md-option ng-repeat="donem in donemler"  ng-value="donem.id"><b>{{donem.donemAdi}}</b></md-option>
+                           
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+        <!--<div layout="column" layout-align="top end" >
+            <p>1: Çok Altında 2: Altında 3: Karşılayan 4: Üstünde 5: Çok Üstünde</p>
+
+
+        </div>-->
+        <div layout="row" layout-align="center center" ng-if="yetkinlikler.length==0 || yetkinlikler==undefined || yetkinlikler==null ">
+            <p style="text-align:center;"><h3 class="animated infinite pulse"><a style="text-decoration:none;color:red;">{{seciliDonem.donemAdi}} Dönemine  Ait Yetkinlik Bulunamadı.</a></h3></p>
+
+
+
+        </div>
+        <table class="table" border="1" ng-if="notVarMi(1)">
+
+            <caption><b style="color:red">Zayıf Yönleriniz</b></caption>
+
+            <thead>
+                <tr>
+                    <th scope="col">Yetkinlik Adı</th>
+                    <th scope="col">Davranışsal Göstergeler</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="yetkinlik in yetkinlikler" ng-if="yetkinlik.not==1">
+                    <td data-label="Yetkinlik Adı" style="width:30% ">
+                        <br />
+                        <b><span style="text-decoration:underline;">{{yetkinlik.yetkinlikAdi}}</span></b><br /><span style="font-size:12px;">{{yetkinlik.tanim}}</span>
+                    </td>
+                    <td data-label="Davranışsal Göstergeler">
+                        <br />
+                        <md-radio-group layout="row" ng-disabled="true" ng-model="yetkinlik.seviye" style="margin-top:10px !important;">
+
+                            <md-radio-button value="1" class="md-primary"><b>Seviye 1</b></md-radio-button>
+                            <md-radio-button value="2"><b>Seviye 2 </b></md-radio-button>
+                            <md-radio-button value="3"><b>Seviye 3</b></md-radio-button>
+
+
+
+
+                        </md-radio-group>
+                        <br />
+                        <ul ng-if="yetkinlik.seviye==1"><li ng-repeat="seviye in yetkinlik.seviye1"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==2"><li ng-repeat="seviye in yetkinlik.seviye2"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==3"><li ng-repeat="seviye in yetkinlik.seviye3"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table" border="1" ng-if="notVarMi(2)">
+
+            <caption><b style="color:blue">Gelişmeye Açık Yönleriniz</b></caption>
+
+            <thead>
+                <tr>
+                    <th scope="col">Yetkinlik Adı</th>
+                    <th scope="col">Davranışsal Göstergeler</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="yetkinlik in yetkinlikler" ng-if="yetkinlik.not==2 || yetkinlik.not==3">
+                    <td data-label="Yetkinlik Adı" style="width:30% ">
+                        <br />
+                        <b><span style="text-decoration:underline;">{{yetkinlik.yetkinlikAdi}}</span></b><br /><span style="font-size:12px;">{{yetkinlik.tanim}}</span>
+                    </td>
+                    <td data-label="Davranışsal Göstergeler">
+                        <br />
+                        <md-radio-group layout="row" ng-disabled="true" ng-model="yetkinlik.seviye" style="margin-top:10px !important;">
+
+                            <md-radio-button value="1" class="md-primary"><b>Seviye 1</b></md-radio-button>
+                            <md-radio-button value="2"><b>Seviye 2 </b></md-radio-button>
+                            <md-radio-button value="3"><b>Seviye 3</b></md-radio-button>
+
+
+
+
+                        </md-radio-group>
+                        <br />
+                        <ul ng-if="yetkinlik.seviye==1"><li ng-repeat="seviye in yetkinlik.seviye1"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==2"><li ng-repeat="seviye in yetkinlik.seviye2"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==3"><li ng-repeat="seviye in yetkinlik.seviye3"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table" border="1" ng-if="notVarMi(4)" >
+           
+            <caption><b style="color:#34a853">Güçlü Olduğunuz Yönler</b></caption>
+   
+            <thead>
+                <tr>
+                    <th scope="col">Yetkinlik Adı</th>
+                    <th scope="col">Davranışsal Göstergeler</th>
+               
+                </tr>
+            </thead>
+            <tbody>
+                <tr  ng-repeat="yetkinlik in yetkinlikler" ng-if="yetkinlik.not>=4">
+                    <td data-label="Yetkinlik Adı" style="width:30% ">
+                        <br />
+                    <b><span style="text-decoration:underline;">{{yetkinlik.yetkinlikAdi}}</span></b><br /><span style="font-size:12px;">{{yetkinlik.tanim}}</span> </td>
+                    <td  data-label="Davranışsal Göstergeler">
+                        <br />
+                        <md-radio-group  layout="row" ng-disabled="true"  ng-model="yetkinlik.seviye" style="margin-top:10px !important;">
+
+                            <md-radio-button value="1" class="md-primary"><b>Seviye 1</b></md-radio-button>
+                            <md-radio-button value="2"><b>Seviye 2 </b></md-radio-button>
+                            <md-radio-button value="3"><b>Seviye 3</b></md-radio-button>
+                           
+
+
+
+                        </md-radio-group>
+                        <br />
+                        <ul ng-if="yetkinlik.seviye==1"><li ng-repeat="seviye in yetkinlik.seviye1"><span  style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==2"><li ng-repeat="seviye in yetkinlik.seviye2"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==3"><li ng-repeat="seviye in yetkinlik.seviye3"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+
+                    </td>
+           
+                </tr>
+           
+            </tbody>
+        </table>
+      
+       
+    
+      </div>
+     
+
+</md-content>
+
+
+

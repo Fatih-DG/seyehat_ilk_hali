@@ -1,0 +1,409 @@
+﻿
+<md-content>
+
+    <div layout="row" layout-align="end end">
+
+        <md-button class="md-primary" ng-click="$root.goToDiv('aciklama')" type="button">Personel İle İlgili Açıklama Gir</md-button>
+        <md-button ng-if="tumNotlarVerildiMi  && !kullaniciFormuKapattiMi" class="md-raised md-primary" ng-click="AmirYetkinlikFormuKapat();" type="button">Formu Değişikliğe Kapat</md-button>
+
+
+    </div>
+
+    <div layout-margin="" class="layout-margin ng-scope">
+
+
+        <div layout="row" layout-align="start">
+
+            <div flex-xs flex-gt-xs="50" layout="column">
+                <md-input-container>
+                    <label>Dönem</label>
+                    <md-select ng-model="seciliDonemId" ng-change='donemDegisti(seciliDonemId)'>
+                        <md-optgroup label="Dönem">
+                            <md-option ng-repeat="donem in donemler" ng-value="donem.id"><b>{{donem.donemAdi}}</b></md-option>
+
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div flex-xs flex-gt-xs="50" layout="column">
+                <md-input-container>
+                    <label>Birim</label>
+                    <md-select ng-model="seciliBirim" ng-change='birimDegisti(seciliBirim)'>
+                        <md-optgroup label="Birimler">
+                            <md-option ng-repeat="birim in birimler" ng-value="birim"><b>{{birim.ad}}</b></md-option>
+
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+
+        <table class="table" border="1">
+            <div layout="row" layout-align="start" ng-if="kullaniciFormuKapattiMi && yetkinlikler.length>0">
+                <span><b>Not:</b><span>Yetkinlik Formu Kapatıldı.Değişiklik Yapmak İçin Sistem Yöneticisine Başvurmalısınız.</span></span>
+
+
+            </div>
+            <div layout="row" layout-align="center center" ng-if="yetkinlikler.length>0">
+                <span>Verilen Not</span>
+
+
+            </div>
+            <div layout="row" layout-align="center center" ng-if="yetkinlikler.length>0">
+
+                <div class="percent-container" style="width: 100px !important;margin: 10px 40%;">
+                    <percent-circle percent="verilenNot" speed="20"></percent-circle>
+                </div>
+
+
+            </div>
+            <caption style="font-weight:bolder">{{ad+" "+soyad}} </caption>
+
+            <caption>{{seciliDonem.donemAdi}} Dönemi  Yetkinlikleri </caption>
+            <div layout="column" layout-align="top end" ng-if="yetkinlikler.length>0">
+                <p>1: Çok Altında 2: Altında 3: Karşılayan 4: Üstünde 5: Çok Üstünde</p>
+
+            </div>
+
+            <thead>
+                <tr>
+                    <th scope="col">Yetkinlik Adı</th>
+                    <th scope="col">Davranışsal Göstergeler</th>
+                    <th scope="col">Ağırlık</th>
+                    <th scope="col">Değerlendirme</th>
+                    <th scope="col">Gerekçe</th>
+                    <!--<th scope="col">İşlemler</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="yetkinlik in yetkinlikler">
+                    <td data-label="Yetkinlik Adı" style="width:30% ">
+                        <br />
+                        <b><span style="text-decoration:underline;">{{yetkinlik.yetkinlikAdi}}</span></b><br /><span style="font-size:12px;">{{yetkinlik.tanim}}</span>
+                    </td>
+                    <td data-label="Davranışsal Göstergeler">
+                        <br />
+                        <md-radio-group layout="row" ng-disabled="true" ng-model="yetkinlik.seviye" style="margin-top:10px !important;">
+
+                            <md-radio-button value="1" class="md-primary"><b>Seviye 1</b></md-radio-button>
+                            <md-radio-button value="2"><b>Seviye 2 </b></md-radio-button>
+                            <md-radio-button value="3"><b>Seviye 3</b></md-radio-button>
+
+
+
+
+                        </md-radio-group>
+                        <br />
+                        <ul ng-if="yetkinlik.seviye==1"><li ng-repeat="seviye in yetkinlik.seviye1"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==2"><li ng-repeat="seviye in yetkinlik.seviye2"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                        <ul ng-if="yetkinlik.seviye==3"><li ng-repeat="seviye in yetkinlik.seviye3"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+
+                    </td>
+                    <td data-label="Ağırlık" style="text-align: center;">
+                        <br />
+                        <b style="text-align:center;"><span style="text-decoration:underline;">% {{yetkinlik.agirlik}}</span></b>
+                    </td>
+                    <td data-label="Değerlendirme" style="text-align:center">
+                        <br />
+                        <md-radio-group layout="row" ng-disabled="kullaniciFormuKapattiMi " ng-change="yetkinlikNotuVer(yetkinlik.id2,yetkinlik.not,$index,yetkinlik.aciklama)" ng-model="yetkinlik.not" style="margin-top:10px !important;">
+
+                            <md-radio-button value="1" class="md-primary"><b> 1</b></md-radio-button>
+                            <md-radio-button value="2"><b> 2 </b></md-radio-button>
+                            <md-radio-button value="3"><b> 3</b></md-radio-button>
+                            <md-radio-button value="4"><b> 4 </b></md-radio-button>
+                            <md-radio-button value="5"><b> 5</b></md-radio-button>
+
+
+
+                        </md-radio-group>
+
+
+                    </td>
+                    <td data-label="Gerekçe" style="text-align:center;">
+                        <br />
+                        <span>{{yetkinlik.aciklama}}</span>
+                       
+                        <md-button ng-if=" !kullaniciFormuKapattiMi" ng-click="aciklamaEkleGuncelle(yetkinlik.id2,yetkinlik.aciklama)" type="button">
+                            <span><i class="fa fa-pencil-alt" aria-hidden="true"></i> {{'Gerekçe Ekle/Düzenle' | translate}}</span>
+
+                        </md-button>
+                        <md-button ng-click="aciklamaSil(yetkinlik.id2,$index)" ng-if="yetkinlik.not>1 && yetkinlik.not<5 && yetkinlik.aciklama!=null &&  !kullaniciFormuKapattiMi" type="button">
+                            <span><i class="fa fa-trash" aria-hidden="true"></i> {{'Gerekçe Sil' | translate}}</span>
+
+                        </md-button>
+
+
+                    </td>
+                    <!--<td data-label="İşlemler" style="vertical-align: middle;">
+                        <md-menu>
+
+                            <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                                <i class="fas fa-ellipsis-v ng-scope"></i>
+                                <md-tooltip md-direction="bottom">{{'ISLEMMENUSU' | translate}}</md-tooltip>
+                            </md-button>
+
+
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button ng-click="aciklamaEkleGuncelle(yetkinlik.id2,yetkinlik.aciklama)">
+                                        <span><i class="fa fa-pencil-alt" aria-hidden="true"></i> {{'Açıklama Ekle/Düzenle' | translate}}</span>
+
+                                    </md-button>
+
+
+                                </md-menu-item>
+                                <md-menu-item ng-if="yetkinlik.not>1 && yetkinlik.not<5 && yetkinlik.aciklama!=null">
+                                    <md-button ng-click="aciklamaSil(yetkinlik.id2,$index)">
+                                        <span><i class="fa fa-trash" aria-hidden="true"></i> {{'Açıklamayı Sil' | translate}}</span>
+
+                                    </md-button>
+
+
+                                </md-menu-item>
+
+
+                            </md-menu-content>
+                        </md-menu>
+                    </td>-->
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+    <div layout="row" layout-align="end end">
+
+
+        <md-button ng-if="tumNotlarVerildiMi  && !kullaniciFormuKapattiMi" class="md-raised md-primary" ng-click="AmirYetkinlikFormuKapat();" type="button">Formu Değişikliğe Kapat</md-button>
+
+
+    </div>
+    <div layout="row" layout-align="center center" id="aciklama">
+        <div flex="70" flex-xs="100" flex-gt-md="70" flex-gt-sm="70">
+            <md-toolbar style="background-color: orange; " md-scroll-shrink>
+                <div class="md-toolbar-tools">
+                    Önemli Tespitler
+                </div>
+            </md-toolbar>
+
+
+
+            <section>
+                <md-subheader class="md-primary">
+
+
+                        <md-input-container class="md-block">
+                            <label>Açıklama</label>
+                            <textarea ng-model="aciklama4" md-maxlength="1000" rows="2" md-select-on-focus></textarea>
+                        </md-input-container>
+
+
+                        <div layout="row" layout-align="end" flex>
+                            <md-button style="height:46px;" class="md-raised md-primary" ng-click='gorusEkle($event,aciklama4,4)' type="button">Ekle</md-button>
+                        </div>
+
+               
+
+
+
+
+
+                </md-subheader>
+                <md-list>
+                    <md-subheader ng-repeat-start="gorus in gorusler" ng-if="gorus.gorusTipi==4" class="md-no-sticky">{{gorus.tarih |  tarihveGunCevirdp}}</md-subheader>
+                    <md-list-item ng-if="gorus.gorusTipi==4">
+
+                        <i class="fas fa-envelope fa-2x"></i>
+
+                        <p style="margin-left:10px;">{{gorus.gorus}}</p>
+
+                        <!--<md-button class="md-icon-button" ng-click="gorusSil(gorus.id)">
+                            <i style="cursor:pointer" class="fas fa-trash "></i>
+                        </md-button>-->
+                    </md-list-item>
+
+                    <md-divider ng-repeat-end></md-divider>
+
+
+                </md-list>
+            </section>
+
+
+
+
+
+
+        </div>
+    </div>
+    <div layout="row" layout-align="center center" id="aciklama">
+        <div flex="70" flex-xs="100" flex-gt-md="70" flex-gt-sm="70">
+            <md-toolbar style="background: rgb(76, 175, 80); " md-scroll-shrink>
+                <div class="md-toolbar-tools">
+                    Personelin Güçlü Olduğu Yönler
+                </div>
+            </md-toolbar>
+
+
+
+            <section>
+                <md-subheader class="md-primary">
+                 
+                        <md-input-container class="md-block">
+                            <label>Açıklama</label>
+                            <textarea ng-model="aciklama3" md-maxlength="1000" rows="2" md-select-on-focus></textarea>
+                        </md-input-container>
+
+
+                        <div layout="row" layout-align="end" flex>
+                            <md-button style="height:46px;" class="md-raised md-primary" ng-click='gorusEkle($event,aciklama3,3)' type="button">Ekle</md-button>
+                        </div>
+
+
+
+
+
+
+                </md-subheader>
+                <md-list>
+                    <md-subheader ng-repeat-start="gorus in gorusler" ng-if="gorus.gorusTipi==3" class="md-no-sticky">{{gorus.tarih |  tarihveGunCevirdp}}</md-subheader>
+                    <md-list-item ng-if="gorus.gorusTipi==3">
+
+                        <i class="fas fa-envelope fa-2x"></i>
+
+                        <p style="margin-left:10px;">{{gorus.gorus}}</p>
+
+                        <!--<md-button class="md-icon-button" ng-click="gorusSil(gorus.id)">
+                            <i style="cursor:pointer" class="fas fa-trash "></i>
+                        </md-button>-->
+                    </md-list-item>
+
+                    <md-divider ng-repeat-end></md-divider>
+
+
+                </md-list>
+            </section>
+
+
+
+
+
+
+        </div>
+    </div>
+    <div layout="row" layout-align="center center">
+        <div flex="70" flex-xs="100" flex-gt-md="70" flex-gt-sm="70">
+            <md-toolbar md-scroll-shrink>
+                <div class="md-toolbar-tools">
+                    Personelin Gelişmeye Açık Yönleri
+                </div>
+            </md-toolbar>
+
+
+
+            <section>
+                <md-subheader class="md-primary">
+                   
+
+                        <md-input-container class="md-block">
+                            <label>Açıklama</label>
+                            <textarea ng-model="aciklama2" md-maxlength="1000" rows="2" md-select-on-focus></textarea>
+                        </md-input-container>
+
+
+                        <div layout="row" layout-align="end" flex>
+                            <md-button ng-click='gorusEkle($event,aciklama2,2)' style="height:46px;" class="md-raised md-primary" type="button" >Ekle</md-button>
+                        </div>
+
+                  
+
+
+
+
+
+
+                </md-subheader>
+                <md-list>
+                    <md-subheader ng-repeat-start="gorus in gorusler" ng-if="gorus.gorusTipi==2" class="md-no-sticky">{{gorus.tarih |  tarihveGunCevirdp}}</md-subheader>
+                    <md-list-item ng-if="gorus.gorusTipi==2">
+
+                        <i class="fas fa-envelope fa-2x"></i>
+
+                        <p style="margin-left:10px;">{{gorus.gorus}}</p>
+
+                        <!--<md-button class="md-icon-button" ng-click="gorusSil(gorus.id)">
+                            <i style="cursor:pointer" class="fas fa-trash "></i>
+                        </md-button>-->
+                    </md-list-item>
+
+                    <md-divider ng-repeat-end></md-divider>
+
+
+                </md-list>
+            </section>
+
+        </div>
+    </div>
+    <div layout="row" layout-align="center center">
+        <div flex="70" flex-xs="100" flex-gt-md="70" flex-gt-sm="70">
+            <md-toolbar style="background: rgb(244, 67, 54); " md-scroll-shrink>
+                <div class="md-toolbar-tools">
+                    Personelin Zayıf Olduğu Yönler
+                </div>
+            </md-toolbar>
+
+
+
+            <section>
+                <md-subheader class="md-primary">
+                  
+
+                        <md-input-container class="md-block">
+                            <label>Açıklama</label>
+                            <textarea ng-model="aciklama1" md-maxlength="1000" rows="2" md-select-on-focus></textarea>
+                        </md-input-container>
+
+
+                        <div>
+
+
+
+
+
+
+                            <md-button style="height:46px;" class="md-raised md-primary" ng-click='gorusEkle($event,aciklama1,1)' type="button">Ekle</md-button>
+
+                        </div>
+
+                   
+
+
+
+
+                </md-subheader>
+                <md-list>
+                    <md-subheader ng-repeat-start="gorus in gorusler" ng-if="gorus.gorusTipi==1" class="md-no-sticky">{{gorus.tarih |  tarihveGunCevirdp}}</md-subheader>
+                    <md-list-item ng-if="gorus.gorusTipi==1">
+
+                        <i class="fas fa-envelope fa-2x"></i>
+
+                        <p style="margin-left:10px;">{{gorus.gorus}}</p>
+
+                        <!--<md-button class="md-icon-button" ng-click="gorusSil(gorus.id)">
+                            <i style="cursor:pointer" class="fas fa-trash "></i>
+                        </md-button>-->
+                    </md-list-item>
+
+                    <md-divider ng-repeat-end></md-divider>
+
+
+                </md-list>
+            </section>
+
+        </div>
+    </div>
+
+</md-content>
+
+
+

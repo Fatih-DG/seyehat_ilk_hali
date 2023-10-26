@@ -1,0 +1,113 @@
+﻿<style>
+    @media only screen and (max-width: 800px) {
+        #no-table table, #no-table thead, #no-table tbody, #no-table th, #no-table td, #no-table tr {
+            display: block;
+        }
+
+            #no-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+        #no-table tr {
+            border: 1px solid #ccc;
+        }
+
+        #no-table td {
+            border: none;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 50%;
+            white-space: normal;
+            text-align: left;
+        }
+
+            #no-table td:before {
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+
+            #no-table td:before {
+                content: attr(data-title);
+            }
+    }
+
+</style>
+
+<!-- Header -->
+<header class="masthead">
+    <div class="container d-flex h-50 align-items-center">
+
+        <div class="mx-auto text-center">
+            <h1 class="mx-auto my-0 text-uppercase">Rehber</h1>
+            <h3 class="text-dark-50 mx-auto mt-2 mb-5">İsim, soyisim ve birim bazlı arama yapabilirsiniz. </h3>
+            <form ng-submit="GetKullaniciBilgileri(arama)" class="form-horizontal">
+
+                <input ng-model="arama" autofocus type="text" class="form-control flex-fill mr-0 mr-sm-2 mb-3 mb-sm-0" id="ara" name="ara" placeholder="Ara...">
+                <br>
+                <button type="submit" id="submit2" name="submit2" class="btn btn-primary mx-auto">Ara</button>
+            </form>
+
+        </div>
+
+    </div>
+    <div class="mx-auto text-center" ng-show="aramaYapildiMi && kullanicilar.length==0">
+      
+        <h3 class="text-dark-50 mx-auto mt-2 mb-5">Kayıt bulunamadı... </h3>
+
+    </div>
+
+
+    <section ng-show="kullanicilar.length>0" id="about" class="bg-light">
+        <div class="container">
+            <div class="row">
+
+                <div class="table-responsive-sm" style="margin-left: auto; margin-right: auto; margin-bottom: 200px;">
+                    <table class="table table-striped" style="overflow:auto">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">İsim</th>
+                                <th scope="col">Soyisim</th>
+                                <th scope="col">Unvan</th>
+                                <th scope="col">Birimi</th>
+
+                                <th scope="col">Harici No</th>
+                                <th scope="col">Dahili No</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="kullanici in kullanicilar">
+                                <th scope="row">{{$index+1}}</th>
+                                <td>{{kullanici.ad}}</td>
+                                <td>{{kullanici.soyad}}</td>
+                                <td>{{kullanici.unvan}}</td>
+                                <td>{{kullanici.birimi}}</td>
+
+                                <td>{{kullanici.hariciNo}}</td>
+                                <td style="font-weight:bolder">{{kullanici.dahiliNo}}</td>
+
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+</header>
+

@@ -1,0 +1,353 @@
+<?xml version="1.0"?>
+<doc>
+  <assembly>
+    <name>Aspose.OMR</name>
+  </assembly>
+  <members>
+    <member name="T:Aspose.OMR.Api.OmrEngine">
+      <summary>
+            The OMR engine.
+            Handles the creation of the template and image processing classes and GUI components.
+            </summary>
+      <example>
+        <code>
+                // get template processor
+                OmrEngine engine = new OmrEngine();
+                TemplateProcessor templateProcessor = engine.GetTemplateProcessor(templatePath);
+            </code>
+      </example>
+      <example>
+        <code>
+                // get correction GUI control
+                OmrEngine engine = new OmrEngine();
+                TemplateProcessor templateProcessor = engine.GetTemplateProcessor(templatePath);
+                CorrectionControl control = engine.GetCorrectionControl(templateProcessor);
+            </code>
+      </example>
+      <example>
+        <code>
+                // generate template
+                OmrEngine engine = new OmrEngine();
+                GenerationResult result = engine.GenerateTemplate(markupPath);
+                if(result.ErrorCode == 0)
+                {
+                    result.Save(folderPath, templateName);
+                }
+            </code>
+      </example>
+    </member>
+    <member name="M:Aspose.OMR.Api.OmrEngine.GetTemplateProcessor(System.String)">
+      <summary>
+            Creates the <see cref="T:Aspose.OMR.Api.TemplateProcessor" /> instance that allows working with specified template.
+            </summary>
+      <param name="templatePath">The path to the OMR template file</param>
+      <returns>The <see cref="T:Aspose.OMR.Api.TemplateProcessor" /> instance</returns>
+    </member>
+    <member name="M:Aspose.OMR.Api.OmrEngine.GetCorrectionControl(Aspose.OMR.Api.TemplateProcessor)">
+      <summary>
+            Creates the <see cref="T:Aspose.OMR.CorrectionUI.CorrectionControl" /> instance that allows working with OMR API using GUI.
+            Takes <see cref="T:Aspose.OMR.Api.TemplateProcessor" /> as a parameter and only works with images created using specified template
+            </summary>
+      <param name="processor">The template processor </param>
+      <returns>The <see cref="T:Aspose.OMR.CorrectionUI.CorrectionControl" /> instance</returns>
+    </member>
+    <member name="M:Aspose.OMR.Api.OmrEngine.GenerateTemplate(System.String,System.String[])">
+      <summary>
+            Creates template (.omr) and template image based on text markup
+            </summary>
+      <param name="markupPath">Path to the text markup file</param>
+      <param name="imagesPaths">Full paths to the images used in generation</param>
+      <returns>Generation result</returns>
+    </member>
+    <member name="T:Aspose.OMR.Api.TemplateProcessor">
+      <summary>
+            Class for processing templates and images.
+            <remarks>
+            Each instance of this class works with a single OMR template.
+            It is able to recognize images of the template specified in the constructor.
+            </remarks></summary>
+      <example>
+        <code>
+                OmrEngine engine = new OmrEngine();
+                TemplateProcessor templateProcessor = engine.GetTemplateProcessor(templatePath);
+                RecognitionResult result = templateProcessor.RecognizeImage(imagePath);
+                string csvResult = result.GetCsv();
+            </code>
+      </example>
+    </member>
+    <member name="M:Aspose.OMR.Api.TemplateProcessor.RecognizeImage(System.String,System.Int32)">
+      <summary>
+            Recognizes image 
+            </summary>
+      <param name="imagePath">The path to the image to recognize</param>
+      <param name="recognitionThreshold">
+            (Optional) The recognition threshold in range (0..100). 
+            Only elements filled above threshold will be counted as filled.</param>
+      <returns>The recognition result</returns>
+    </member>
+    <member name="M:Aspose.OMR.Api.TemplateProcessor.Recalculate(Aspose.OMR.Model.RecognitionResult,System.Int32)">
+      <summary>
+            Updates recognition result using fine tuned parameters.
+            </summary>
+      <remarks>
+            Use this method to improve the recognition results 
+            </remarks>
+      <param name="result">The recognition result to update.</param>
+      <param name="recognitionThreshold">
+            (Optional) The recognition threshold in range (0..100). 
+            Only elements filled above threshold will be counted as filled.</param>
+    </member>
+    <member name="T:Aspose.OMR.CorrectionUI.CorrectionControl">
+      <summary>
+            The User Control that allows recognizing images and correct and calibrate recognition parameters
+            </summary>
+      <summary>
+            CorrectionControl
+            </summary>
+    </member>
+    <member name="M:Aspose.OMR.CorrectionUI.CorrectionControl.Initialize">
+      <summary>
+            Initialize the control
+            </summary>
+    </member>
+    <member name="M:Aspose.OMR.CorrectionUI.CorrectionControl.LoadAndDisplayImage(System.String)">
+      <summary>
+            Load and display the image for the recognition
+            </summary>
+      <param name="imagePath">Path to the filled image to recognize</param>
+    </member>
+    <member name="M:Aspose.OMR.CorrectionUI.CorrectionControl.RecognizeImage">
+      <summary>
+            Recognize image
+            </summary>
+    </member>
+    <member name="M:Aspose.OMR.CorrectionUI.CorrectionControl.ExportResults(System.String)">
+      <summary>
+            Export the recognition results for the image
+            </summary>
+      <param name="exportPath">Path to the export</param>
+    </member>
+    <member name="M:Aspose.OMR.CorrectionUI.CorrectionControl.InitializeComponent">
+      <summary>
+            InitializeComponent
+            </summary>
+    </member>
+    <member name="T:Aspose.OMR.Metered">
+      <summary>
+            Provides methods to set metered key.
+            </summary>
+      <example>
+            In this example, an attempt will be made to set metered public and private key
+            
+            <code>
+            [C#]
+            
+            Metered matered = new Metered();
+            matered.SetMeteredKey("PublicKey", "PrivateKey");
+            
+            
+            [Visual Basic]
+            
+            Dim matered As Metered = New Metered
+            matered.SetMeteredKey("PublicKey", "PrivateKey")
+            </code></example>
+    </member>
+    <member name="M:Aspose.OMR.Metered.SetMeteredKey(System.String,System.String)">
+      <summary>
+            Sets metered public and private key
+            </summary>
+      <param name="publicKey">public key</param>
+      <param name="privateKey">private key</param>
+    </member>
+    <member name="M:Aspose.OMR.Metered.GetConsumptionQuantity">
+      <summary>
+            Gets consumption file size
+            </summary>
+      <returns>consumption quantity</returns>
+    </member>
+    <member name="M:Aspose.OMR.Metered.GetConsumptionCredit">
+      <summary>
+            Gets consumption credit
+            </summary>
+      <returns>consumption quantity</returns>
+    </member>
+    <member name="T:Aspose.OMR.Generation.GenerationResult">
+      <summary>
+            The result of the template generation.
+            Contains the template image and the template (json that describes elements location on the image).
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Generation.GenerationResult.TemplateImage">
+      <summary>
+            Gets or sets the generated Template Image 
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Generation.GenerationResult.Template">
+      <summary>
+            Gets or sets the Template JSON string
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Generation.GenerationResult.ErrorCode">
+      <summary>
+            Gets or sets the error code. Equals 0 if no errors occured.
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Generation.GenerationResult.ErrorMessage">
+      <summary>
+            Gets or sets the message describing error. Empty if no errors occured.
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Generation.GenerationResult.Warnings">
+      <summary>
+            Gets or sets list of the warnings messages describing non-critical faults appeared during generation
+            </summary>
+    </member>
+    <member name="M:Aspose.OMR.Generation.GenerationResult.Save(System.String,System.String)">
+      <summary>
+            Save template image and template to the specified folder
+            </summary>
+      <param name="folder">Destination folder</param>
+      <param name="name">Name of the template</param>
+    </member>
+    <member name="M:Aspose.OMR.Generation.GenerationResult.SaveAsPdf(System.String,System.String)">
+      <summary>
+            Save template image and template to the specified folder
+            Template image saved as pdf 
+            </summary>
+      <param name="folder">Destination folder</param>
+      <param name="name">Name of the template</param>
+    </member>
+    <member name="T:Aspose.OMR.License">
+      <summary>
+            Provides methods to license the component.
+            </summary>
+      <example>
+            In this example, an attempt will be made to find a license file named MyLicense.lic
+            in the folder that contains 
+            
+            
+            the component, in the folder that contains the calling assembly,
+            in the folder of the entry assembly and then in the embedded resources of the calling assembly.
+            <code>
+            [C#]
+            
+            License license = new License();
+            license.SetLicense("MyLicense.lic");
+            </code></example>
+    </member>
+    <member name="P:Aspose.OMR.License.Embedded">
+      <summary>
+            License number was added as embedded resource.
+            </summary>
+    </member>
+    <member name="M:Aspose.OMR.License.SetLicense(System.String)">
+      <summary>
+            Licenses the component.
+            </summary>
+      <remarks>
+        <p>Tries to find the license in the following locations:</p>
+        <p>1. Explicit path.</p>
+        <p>2. The folder of the component assembly.</p>
+        <p>3. The folder of the client's calling assembly.</p>
+        <p>4. The folder of the entry assembly.</p>
+        <p>5. An embedded resource in the client's calling assembly.</p>
+        <p>
+          <b>Note:</b>On the .NET Compact Framework, tries to find the license only in these locations:</p>
+        <p>1. Explicit path.</p>
+        <p>2. An embedded resource in the client's calling assembly.</p>
+      </remarks>
+      <example>
+            In this example, an attempt will be made to find a license file named MyLicense.lic
+            in the folder that contains 
+            
+            
+            the component, in the folder that contains the calling assembly,
+            in the folder of the entry assembly and then in the embedded resources of the calling assembly.
+            <code>
+            [C#]
+            
+            License license = new License();
+            license.SetLicense("MyLicense.lic");
+            </code><param name="licenseName">Can be a full or short file name or name of an embedded resource.
+            Use an empty string to switch to evaluation mode.</param></example>
+    </member>
+    <member name="M:Aspose.OMR.License.SetLicense(System.IO.Stream)">
+      <summary>
+            Licenses the component.
+            </summary>
+      <param name="stream">A stream that contains the license.</param>
+      <remarks>
+        <p>Use this method to load a license from a stream.</p>
+      </remarks>
+      <example>
+        <code>
+            [C#]
+            
+            License license = new License();
+            license.SetLicense(myStream);
+            </code>
+      </example>
+    </member>
+    <member name="T:Aspose.OMR.Model.IOmrElement">
+      <summary>
+            The interface for the OMR elements
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Model.IOmrElement.QuestionName">
+      <summary>
+            Gets or sets the Question Name 
+            </summary>
+    </member>
+    <member name="M:Aspose.OMR.Model.IOmrElement.GetAnswer">
+      <summary>
+            Forms a string with recognition result
+            </summary>
+      <returns>String containing recognition result</returns>
+    </member>
+    <member name="M:Aspose.OMR.Model.IOmrElement.GetCsv">
+      <summary>
+            Forms answers as a comma-separated values string
+            </summary>
+      <returns>The recognition results as CSV string</returns>
+    </member>
+    <member name="T:Aspose.OMR.Model.RecognitionResult">
+      <summary>
+            The result of the image recognition.
+            Contains all OMR elements with detailed recognition information and methods for results export.
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Model.RecognitionResult.ImagePath">
+      <summary>
+            Gets or sets the path to the processed image
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Model.RecognitionResult.TemplateName">
+      <summary>
+            Gets or sets the OMR template
+            </summary>
+    </member>
+    <member name="P:Aspose.OMR.Model.RecognitionResult.OmrElements">
+      <summary>
+            Gets or sets the list of OMR elements on page
+            </summary>
+    </member>
+    <member name="M:Aspose.OMR.Model.RecognitionResult.GetCsv">
+      <summary>
+            Form CSV string with recognition results
+            </summary>
+      <returns>Recognition results as CSV string</returns>
+    </member>
+    <member name="M:Aspose.OMR.Model.RecognitionResult.GetJson">
+      <summary>
+            Form JSON string with recognition results
+            </summary>
+      <returns>Recognition results as JSON string</returns>
+    </member>
+    <member name="M:Aspose.OMR.Model.RecognitionResult.GetXml">
+      <summary>
+            Form XML string with recognition results
+            </summary>
+      <returns>Recognition results as XML string</returns>
+    </member>
+  </members>
+</doc>

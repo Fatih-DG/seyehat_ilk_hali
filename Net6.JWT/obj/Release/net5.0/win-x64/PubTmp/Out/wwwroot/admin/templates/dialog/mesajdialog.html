@@ -1,0 +1,95 @@
+﻿
+
+<style>
+    md-content {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
+
+
+
+
+
+<div ng-cloak>
+    <md-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Mesaj İçeriği">
+                <md-content class="md-padding" style="min-width:400px;">
+                    <h3 >{{mesaj.konu}}</h3>
+                  
+                   
+                      
+                                <div class="md-dialog-content">
+                                    <div class="md-dialog-content" ng-bind-html="mesaj.mesaj | unsafe">
+                                       
+                                    </div>
+                                </div>
+                        
+
+                          
+
+
+                </md-content>
+            </md-tab>
+            <md-tab label="Kişi Bilgileri">
+                <md-content class="md-padding"  style="min-width:400px;">
+                    <h3 class="">{{'KISIBILGILERI' | translate}}</h3>
+
+
+
+<md-content  flex layout-padding>
+
+    <md-input-container class="md-block">
+        <label>{{'ADSOYAD' | translate}}</label>
+        <input disabled md-maxlength="500" required name="Ad Soyad " ng-model="mesaj.adSoyad">
+
+    </md-input-container>
+
+    <!--<md-input-container class="md-block">
+        <label>Konu </label>
+        <input disabled required name="Konu" ng-model="mesaj.konu">
+       
+    </md-input-container>-->
+
+    
+
+    <md-input-container class="md-block">
+        <label>{{'TELEFON' | translate}}</label>
+        <input disabled md-no-asterisk name=Telefon" ng-model="mesaj.tel">
+
+    </md-input-container>
+ 
+
+    <md-input-container class="md-block">
+        <label>Email</label>
+        <input disabled type="email" name="Email" ng-model="mesaj.email"
+               minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+
+      
+    </md-input-container>
+    <md-input-container class="md-block">
+        <label>IP </label>
+        <input disabled md-no-asterisk name=ip" ng-model="mesaj.ip">
+
+    </md-input-container>
+   
+  
+       
+</md-content>
+                </md-content>
+            </md-tab>
+        
+        </md-tabs>
+
+
+        <md-dialog-actions layout="row">
+
+            <md-button ng-click="cancel()">
+                {{'KAPAT' | translate}}
+            </md-button>
+        </md-dialog-actions>
+    </md-content>
+</div>

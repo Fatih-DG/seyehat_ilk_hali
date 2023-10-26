@@ -1,0 +1,230 @@
+﻿
+<!--<div layout="column" layout-align="end">
+
+    <md-button ng-click="grupEklemeDuzenleme(seciliGrup,10);" class="md-raised md-primary" type="button">Grup Ekle</md-button>
+</div>-->
+
+    <md-content>
+
+
+
+
+    <!--<div flex-xs flex-gt-xs="33" layout="row">
+        <md-card>
+            <md-card-actions layout="row" layout-align="center center">
+
+                <span class="md-headline">Gruplar</span>
+
+            </md-card-actions>
+            <md-card-content >
+
+
+
+
+                <md-list-item style="color:#793658;font-weight:600;">
+
+
+                            <md-radio-group dragula='"1"' dragula-model="kullanicilar" ng-model="seciliGrup" class="md-primary">
+
+                                <md-radio-button  ng-repeat="grup in gruplar" ng-value="grup.id" ng-class="{'md-align-top-left': $index==1}" ng-click="kullanicininDegerlendirdikleriniGetir($index)">
+                                    {{grup.grupAdi}}<span style="font-size:12px;color:black;"> </span><br />
+                                    <span >
+
+                                    </span>
+
+                                </md-radio-button>
+                                <md-divider></md-divider>
+
+                            </md-radio-group>
+
+
+
+            </md-list-item>
+
+
+
+            </md-card-content>
+
+
+            <md-divider></md-divider>
+        </md-card>
+    </div>-->
+    <!--<div flex-xs flex-gt-xs="22" layout="column" ng-repeat="yetkinlikTuru in yetkinlikTurleri">
+        <md-card >
+            <md-card-actions layout="row" layout-align="center center">
+
+                <span class="md-headline">{{yetkinlikTuru.yetkinlikTuruAdi}}</span>
+
+            </md-card-actions>
+            <md-card-content>
+
+                <md-divider></md-divider>
+
+                <md-list-item style="color:#793658;font-weight:600;" ng-repeat="yetkinlik in yetkinlikTuru.yetkinlikler" >
+
+
+                    <div>
+                        <md-checkbox ng-model="yetkinlikTuru.yetkinlikler[$index].seciliMi">
+                            {{yetkinlik.yetkinlikAdi}}<span style="font-size:12px;color:black;"> </span>
+
+                        </md-checkbox>
+
+
+
+                        <div>
+
+                            <input type="number" max="100" ng-model="yetkinlikTuru.yetkinlikler[$index].agirlik" placeholder="agirlik">
+
+                            <md-radio-group ng-model="yetkinlikTuru.yetkinlikler[$index].seviye" class="md-primary">
+
+                                <md-radio-button ng-value="1" ng-class="{'md-align-top-left': $index==1}">
+                                    S1
+
+                                </md-radio-button>
+                                <md-radio-button ng-value="2" ng-class="{'md-align-top-left': $index==1}">
+                                    S2
+
+                                </md-radio-button>
+                                <md-radio-button ng-value="3" ng-class="{'md-align-top-left': $index==1}">
+                                    S3
+
+                                </md-radio-button>
+                                <md-divider></md-divider>
+
+                            </md-radio-group>
+                        </div>
+                    </div>
+
+
+
+
+                        <md-divider></md-divider>
+                    <br />
+
+                </md-list-item>
+
+
+
+            </md-card-content>
+
+
+            <md-divider></md-divider>
+        </md-card>
+    </div>-->
+    <!--<md-list-item style="color:#793658;font-weight:600;">
+
+
+        <md-radio-group dragula='"1"' dragula-model="kullanicilar" ng-model="seciliGrup" class="md-primary">
+
+            <md-radio-button ng-repeat="grup in gruplar" ng-value="grup.id" ng-class="{'md-align-top-left': $index==1}" ng-click="kullanicininDegerlendirdikleriniGetir($index)">
+                {{grup.grupAdi}}<span style="font-size:12px;color:black;"> </span><br />
+                <span>
+
+                </span>
+
+            </md-radio-button>
+            <md-divider></md-divider>
+
+        </md-radio-group>
+
+
+
+    </md-list-item>-->
+    <div >
+
+
+        <div layout-gt-xs="row">
+            <md-input-container flex>
+
+                <label>Grup Seç </label>
+
+                <md-select ng-model="seciliGrup" required ng-change="grupChange(seciliGrup)">
+                    <md-option ng-value="grup.id" ng-repeat="grup in gruplar">{{grup.grupAdi}}</md-option>
+
+                </md-select>
+
+            </md-input-container>
+
+            <md-button style="height:45px;" ng-click="grupEkleme();" class="md-raised md-primary" type="button">Grup Ekle</md-button>
+            <md-button style="height:45px;" ng-click="grupDuzenleme(seciliGrup);" class="md-raised md-primary" type="button"> Grup Düzenle</md-button>
+            <md-button style="height:45px;" ng-click="grupSil(seciliGrup);" class="md-raised md-primary" type="button"> Seçili Grubu Sil</md-button>
+        </div>
+
+    </div>
+    
+        <div layout="row" layout-align="end" flex ng-hide="seciliGrup==undefined || seciliGrup==-1 || seciliGrup==null">
+            <md-input-container flex>
+
+                <label>Seviyeleri Otomatik Ata</label>
+
+                <md-select ng-model="seviyeIndex"  ng-change="seviyeleriAta(seviyeIndex)">
+                    <md-option value="-1" >Otomatik Seviye Seçme Kapalı</md-option>
+                    <md-option value="0">Genel Sekreter/D.Bşk.</md-option>
+                    <md-option value="1">Ş. Md./Fakülte/Ens. Sekreteri</md-option>
+                    <md-option value="2">Mühendis/Öğr.Gör.</md-option>
+                    <md-option value="3">Büro Personeli/Teknik personel</md-option>
+                </md-select>
+
+            </md-input-container>
+            <md-button style="height:45px;" ng-click="ekle(seciliGrup);" class="md-raised md-primary" type="button">Yetkinlikleri Kaydet</md-button>
+
+        </div>
+        <div ng-hide="seciliGrup==undefined || seciliGrup==-1 || seciliGrup==null">
+            <md-checkbox ng-model="seciliOlanlariGoster">
+                <b><span style="text-decoration:underline;">Sadece Seçili Yetkinlikleri Göster</span></b>
+
+            </md-checkbox>
+        </div>
+       
+            <table class="table" border="1" ng-repeat="yetkinlikTuru in yetkinlikTurleri" ng-hide="seciliGrup==undefined || seciliGrup==-1 || seciliGrup==null">
+
+                <caption>{{yetkinlikTuru.yetkinlikTuruAdi}}</caption>
+
+                <thead>
+                    <tr>
+                        <th scope="col">Yetkinlik Adı</th>
+                        <th scope="col">Davranışsal Göstergeler</th>
+                        <th scope="col">Ağırlık(Toplam={{toplam}})</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="yetkinlik in yetkinlikTuru.yetkinlikler"  ng-show="seciliOlanlariGoster==true?yetkinlikTuru.yetkinlikler[$index].seciliMi:true">
+                        <td data-label="Yetkinlik Adı">
+                            <br />
+                            <md-checkbox ng-model="yetkinlikTuru.yetkinlikler[$index].seciliMi">
+                                <b><span style="text-decoration:underline;">{{yetkinlik.yetkinlikAdi}}</span></b>
+
+                            </md-checkbox>
+                            <br /><span style="font-size:12px;">{{yetkinlik.tanim}}</span>
+                        </td>
+                        <td data-label="Davranışsal Göstergeler">
+                            <br />
+                            <md-radio-group layout="row" ng-model="yetkinlik.seviye" style="margin-top:10px !important;width:100%;">
+
+                                <md-radio-button style="width: 110px;" value="1" class="md-primary"><b>Seviye 1</b></md-radio-button>
+                                <md-radio-button style="width: 110px;" value="2"><b>Seviye 2 </b></md-radio-button>
+                                <md-radio-button style="width: 110px;" value="3"><b>Seviye 3</b></md-radio-button>
+
+
+
+
+                            </md-radio-group>
+                            <br />
+                            <ul ng-if="yetkinlik.seviye==1"><li ng-repeat="seviye in yetkinlik.seviye1"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                            <ul ng-if="yetkinlik.seviye==2"><li ng-repeat="seviye in yetkinlik.seviye2"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+                            <ul ng-if="yetkinlik.seviye==3"><li ng-repeat="seviye in yetkinlik.seviye3"><span style="font-size:12px;">{{seviye}}</span></li></ul>
+
+                        </td>
+                        <td data-label="Ağırlık">
+                            <md-input-container class="md-block">
+                                <!--<label>Ağırlık</label>-->
+                                <input ng-change="agirlikDegisti(yetkinlikTurleri)" type="number" max="100" ng-model="yetkinlikTuru.yetkinlikler[$index].agirlik">
+
+                            </md-input-container>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+</md-content>
+  

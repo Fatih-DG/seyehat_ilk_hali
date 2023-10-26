@@ -1,0 +1,112 @@
+﻿
+
+
+<div layout="column">
+
+    <!--<md-content flex="100">
+      <md-card style="background-color:whitesmoke;" flex="50">
+                <md-card-title>
+                    <md-card-title-media>
+
+                        <div md-colors="{background: 'default-accent'}" style="background: rgb(255, 64, 129); color: rgb(255, 255, 255);" id="profileImage">EA</div>
+
+                    </md-card-title-media>
+                    <md-card-title-text>
+                        <span class="md-headline ng-binding">&ensp;&ensp;User name</span>
+                        <span class="md-subhead description ng-binding">This card is colored according the default theme</span>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+
+       
+       
+            <md-card style="background-color:whitesmoke;" flex="50">
+                <md-card-title>
+                    <md-card-title-media>
+
+                        <div md-colors="{background: 'default-accent'}" style="background: rgb(255, 64, 129); color: rgb(255, 255, 255);" id="profileImage">EA</div>
+
+                    </md-card-title-media>
+                    <md-card-title-text>
+                        <span class="md-headline ng-binding">&ensp;&ensp;User name</span>
+                        <span class="md-subhead description ng-binding">This card is colored according the default theme</span>
+                    </md-card-title-text>
+                </md-card-title>
+            </md-card>
+
+       
+
+    </md-content>-->
+
+
+    <md-content class="md-padding" layout-xs="column" layout="row">
+
+
+
+        <div flex-xs flex-gt-xs="50" layout="column">
+            
+
+
+            <md-card>
+               
+
+                <md-card-title layout="row" layout-align="center center">
+                    <md-card-title-media>
+
+                        <div  style="background-color:#793658; color: rgb(255, 255, 255);" id="profileImage2">{{kullanici.ad | substr:1}}{{kullanici.soyad | substr:1}}</div>
+
+                    </md-card-title-media>
+                </md-card-title>
+                <md-card-actions layout="row" layout-align="center center">
+
+                    <span class="md-headline">{{kullanici.ad+" "+kullanici.soyad}}</span>
+                  
+                </md-card-actions>
+                <md-card-actions layout="row" layout-align="center center">
+
+                    <span class="md-subhead">{{$root.seciliBirim}}</span>
+
+                </md-card-actions>
+                <md-card-content>
+                    <p>
+                 
+                    </p>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div flex-xs flex-gt-xs="50" layout="column">
+            <md-card>
+               
+                <md-card-content>
+                    <h1 class="midtext">{{'KULLANICIBILGILERI' | translate}}</h1>
+                    <md-divider></md-divider>
+                    <br />
+                    <br />
+                  
+                   
+                  
+                </md-card-content>
+                <md-list-item style="color:#793658;font-weight:600;">
+                    <i class="fa-2x fa fa-user" aria-hidden="true"></i>
+                    <h1 class="md-title">&ensp;&ensp;&ensp;{{'ADSOYAD' |translate}}</h1>
+                    <p class="md-secondary">{{kullanici.ad+" "+kullanici.soyad}} </p>
+
+                </md-list-item>
+                <md-list-item  style="color:#793658;font-weight:600;">
+                    <i class="fa-2x fa fa-envelope" aria-hidden="true"></i>
+                    <h1 class="md-title">&ensp;&ensp;&ensp;Email</h1>
+                    <p class="md-secondary">{{kullanici.email}}</p>
+
+                </md-list-item>
+                <md-list-item style="color:#793658;font-weight:600;">
+                    <i class="fa-2x fa fa-phone" aria-hidden="true"></i>
+                    <h1 class="md-title">&ensp;&ensp;&ensp;{{'TELEFON' |translate}}</h1>
+                    <p class="md-secondary">{{kullanici.tel}}</p>
+
+                </md-list-item>
+
+                <md-divider></md-divider>
+            </md-card>
+        </div>
+    </md-content>
+</div>

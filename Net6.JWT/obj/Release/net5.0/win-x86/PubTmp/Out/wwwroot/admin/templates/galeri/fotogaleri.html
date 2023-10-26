@@ -1,0 +1,61 @@
+﻿
+<style>
+
+
+input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+</style>
+
+<md-content style="margin-top:15px;" class="animated rotateIn" ng-init="animasyon='animated infinite pulse'" >
+
+    <div masonry="{ transitionDuration: '0.4s' }" load-images="true" preserve-order>
+        <div class="masonry-brick" ng-repeat="image in images">
+
+            <md-checkbox ng-model="images[$index].selected" ng-change="tumunuSec2(tumunuSec);"><img ng-class="images[$index].selected?animasyon:''" ng-src="http://api.ziverozdemir.org/images/thumbs/{{ image.resim }}" alt=""></md-checkbox>
+           
+        </div>
+    </div>
+
+
+ 
+        <md-button type="button" class="md-raised md-primary pull-right">
+            <md-tooltip>
+                Fotoğraf Galerisine Resim Ekler   
+            </md-tooltip>
+            
+            Resim Ekle 
+            <input ng-file-select="resimEkle($files)" type="file" name="myfile" multiple />
+        </md-button>
+
+
+    <div layout="column" layout-align="top center" ng-show="images.length==0">
+        <p style="text-align:center;"><h1 class="animated infinite pulse"><a style="text-decoration:none;color:red;">Henüz Resim Eklemediniz.Resim Eklemek İçin Resim Ekle Butonuna Tıklayınız...</a></h1></p>
+
+
+
+    </div>
+
+
+    <md-button ng-show="butonGorunurlugu(images)" ng-click="resimleriSil()" type="button" class="md-raised md-primary pull-right">
+        <md-tooltip>
+      Seçili Resimleri Siler
+        </md-tooltip>
+
+        Sil
+    </md-button>
+</md-content>
+
+<md-content flex layout-padding ng-show="images.length==0">
+
+
+
+   
+
+
+</md-content>

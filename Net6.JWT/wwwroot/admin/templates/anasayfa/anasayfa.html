@@ -1,0 +1,98 @@
+﻿<div style="height:50px;" class="row">
+
+</div>
+    <div class="row">
+        <md-button class="md-fab md-primary"
+                   aria-label=""
+                   style="right: 150px; position: fixed; bottom: 30px;" ng-click='RehbereKisiEkleVeyaGuncelleDialog(null,false,$index)'>
+            <md-tooltip md-direction="top">
+                Kişi ekle
+            </md-tooltip>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path></svg>
+        </md-button>
+
+    </div>
+
+    <div class="row">
+
+        <div class="table-responsive-sm" style="margin-left: auto; margin-right: auto;">
+            <table class="table table-striped" style="overflow:auto">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">İsim</th>
+                        <th scope="col">Soyisim</th>
+                        <th scope="col">Unvan</th>
+                        <th scope="col">Dahili No</th>
+                        <th scope="col">Harici No</th>
+                        <th scope="col">Birimi</th>
+                        <th scope="col">Durum</th>
+                        <th scope="col">İşlemler</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="kullanici in tumu.source | itemsPerPage: sayfaBoyutu" total-items="tumu.total">
+                        <th scope="row">{{$index+1 + (($root.sayfaNo-1)*(sayfaBoyutu))}}</th>
+                        <td>{{kullanici.ad}}</td>
+                        <td>{{kullanici.soyad}}</td>
+                        <td>{{kullanici.unvan}}</td>
+                        <td>{{kullanici.dahiliNo}}</td>
+                        <td>{{kullanici.hariciNo}}</td>
+                        <td>{{kullanici.birimi}}</td>
+                        <td> <span ng-if="kullanici.aktifMi==true" style="color:green;">Aktif</span> <span ng-if="kullanici.aktifMi==false" style="color:red;">Pasif</span> </td>
+                        <td>
+                            <md-menu md-offset="0 -7" style="cursor: pointer;">
+                                <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;"><path d="M10 10h4v4h-4zm0-6h4v4h-4zm0 12h4v4h-4z"></path></svg>
+                                </md-button>
+                                <md-menu-content width="6">
+                                    <md-menu-item>
+                                        <md-button  ng-click='RehbereKisiEkleVeyaGuncelleDialog(kullanici,true,$index)' > <span md-menu-align-target>Güncelle</span> </md-button>
+                                    </md-menu-item>
+
+
+                                    <md-menu-item ng-click='rehberdenKisiSil(kullanici.id,$index)'>
+                                        <md-button> <span md-menu-align-target>Sil</span>  </md-button>
+
+                                    </md-menu-item>
+
+                                    <md-menu-item ng-if="kullanici.aktifMi==false" ng-click='KisiyiAktifYap(kullanici.id,$index)'>
+
+                                        <md-button> <span md-menu-align-target>Aktif Yap</span></md-button>
+                                    </md-menu-item>
+
+
+                                    <md-menu-item ng-if="kullanici.aktifMi==true" ng-click='KisiyiPasifYap(kullanici.id,$index)'>
+                                        <md-button> <span md-menu-align-target>Pasif Yap</span> </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </td>
+
+
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div>
+            <div flex-lg="100">
+                <dir-pagination-controls max-size="1"
+                                         direction-links="true"
+                                         boundary-links="true"
+                                         on-page-change="$root.getKullanicilar($root.arama,newPageNumber, $root.sayfaBoyutu)" template-url="templates/dirPagination.tpl.html" layout="row" layout-align="center center" class="ng-scope ng-isolate-scope layout-align-center-center layout-column">
+                </dir-pagination-controls>
+
+
+            </div>
+        </div>
+
+
+    </div>

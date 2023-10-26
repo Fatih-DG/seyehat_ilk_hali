@@ -1,0 +1,79 @@
+﻿
+<md-content flex layout-padding >
+    <div class="row" style="margin-left:20px;" ng-init="arama=''">
+
+        <md-list-item flex>
+            <i class="fas fa-search"></i>
+
+            <md-input-container class="md-block" flex>
+                <label>{{'ARAMA' | translate }}</label>
+                <input ng-change="aramaYap(arama)" ng-model="arama">
+            </md-input-container>
+
+        </md-list-item>
+
+
+
+
+        <div class="pull-right" style="margin-top:30px;" flex>
+            <!--<md-button class="md-icon-button" aria-label="More" >
+                <i class="fa-2x fas fa-trash"></i>
+            </md-button>-->
+
+
+            <md-checkbox ng-model="tumunuSec" ng-change="tumunuSec2(tumunuSec);"></md-checkbox>
+            <md-button ng-click="sil()" class="md-icon-button" aria-label="More" ng-show="butonGorunurlugu(haberler)">
+                <i class="fa-2x fas fa-trash"></i>
+            </md-button>
+
+
+        </div>
+
+
+
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <br />
+        <br />
+        <br />
+        <md-divider></md-divider>
+        <md-list-item dir-paginate="haber in haberler | itemsPerPage: sayfaBoyutu" total-items="toplam">
+            <md-checkbox ng-model='haberler[$index].selected' ng-change="tumunuSeciliMi(haberler[$index].selected);"></md-checkbox>
+
+            <img alt="{{ haber.baslik }}" ng-src="http://api.ziverozdemir.org/images/resimler/{{ haber.resim==null?'noimage.png':haber.resim }}" class="md-avatar" />
+            <p ng-click="mesajGoster(haber);$event.stopPropagation();"><span style="margin-left:30px;">{{haber.baslik}}/<span style="color: #aeb2b7;margin-left:30px;font-size:9px">{{haber.kategoriAdi}}</span></span> <span style="color: #aeb2b7;margin-left:30px;font-size:12px">{{haber.yazi |html2Text}}</span> <span class="pull-right">{{haber.tarih | date : "HH.mm / dd.MM.y" }}</span></p>
+
+
+            <!--<md-button class="md-icon-button md-secondary" aria-label="More" >
+                <i class="fa-2x fas fa-user"></i>
+            </md-button>-->
+            <!--<md-switch class="md-secondary" ng-model="mesaj.selected"></md-switch>-->
+            <md-divider></md-divider>
+        </md-list-item>
+    </div>
+
+
+
+
+    <dir-pagination-controls max-size="1"
+                             direction-links="true"
+                             boundary-links="true"
+                             on-page-change="sayfaGetir(newPageNumber, sayfaBoyutu)" template-url="/templates/dirPagination.tpl.html" layout="column" layout-align="center center">
+    </dir-pagination-controls>
+    </md-content>
+
+    <!--<md-content flex layout-padding ng-show="haberler.length==0 && haberler!=undefined ">
+
+
+
+        <div layout="column" layout-align="top center">
+            <p style="text-align:center;"><h1 class="animated infinite pulse"><a ui-sref="HaberEkleme" style="text-decoration:none;color:red;">Henüz Haber Eklemediniz.Haber Eklemek İçin Tıklayınız...</a></h1></p>
+
+
+
+        </div>
+
+
+    </md-content>-->

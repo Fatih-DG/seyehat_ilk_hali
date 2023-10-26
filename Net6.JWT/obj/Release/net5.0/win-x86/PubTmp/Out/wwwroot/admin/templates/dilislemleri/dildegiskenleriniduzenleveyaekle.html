@@ -1,0 +1,85 @@
+﻿<link href="../../Content/Css/styletable.css" rel="stylesheet" />
+<div class="table-responsive-vertical shadow-z-1 animated  bounceInLeft" style="margin-top:20px;">
+    <style>
+
+        .mavi{
+
+            color:dodgerblue;
+        }
+    </style>
+    <div layout="row" layout-align="end" flex>
+
+        <md-button ng-click="degiskenEkle(id)" class="md-raised md-primary" type="submit">{{"DEGISKENEKLE" | translate}}</md-button>
+    </div>
+    <table id="table" class="table table-hover table-bordered table-striped table-mc-yellow">
+        <thead>
+            <tr>
+
+                <th>  <h2><b>No</b></h2></th>
+                <th><h2><b>  {{'DEGISKEN' | translate}}</b></h2></th>
+                <th><h2><b>  {{'ACIKLAMA' | translate}}</b></h2></th>
+              
+                <th><h2><b>  {{'DEGISKENDEGERI' | translate}}</b></h2></th>
+              
+
+                <th ng-if="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')"><h2><b>  {{'ISLEMLER' | translate}}</b></h2></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="degisken in degiskenler" ng-class="{ 'mavi': degisken.sistemDegiskeniMi }">
+
+                <td data-title="No"><h2><b> {{$index+1}}</b></h2></td>
+                <td data-title="{{'DEGISKEN' | translate}}"><a><h2><b> {{degisken.degisken}}</b></h2></a></td>
+                <td ng-click="" data-title="{{'ACIKLAMA' | translate}}"><h2><b> {{degisken.aciklama | substr:100}}</b></h2></td>
+        
+                <td data-title="{{'DEGISKENDEGERI' | translate}}">
+                <h2><b> {{degisken.deger}}</b></h2>
+     
+                              </td>
+             
+
+
+                <td ng-if="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')" data-title="{{'ISLEMLER' | translate}}">
+                    <div layout="row" layout-align="end" flex>
+
+
+                        <md-menu>
+                            <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                                <i class="fas fa-ellipsis-v ng-scope"></i>
+                                <md-tooltip md-direction="bottom">{{'ISLEMMENUSU' | translate}}</md-tooltip>
+                            </md-button>
+
+
+                            <md-menu-content width="4">
+                                <!--<md-menu-divider></md-menu-divider>-->
+                                <md-menu-item ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')">
+                                    <md-button ng-click="duzenle(degisken,$index)">
+                                        <i class="fa fa-pencil-alt" aria-hidden="true"></i> {{'DUZENLE' | translate}}
+                                    </md-button>
+                                </md-menu-item>
+
+
+                                <md-menu-item ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici') && !degisken.sistemDegiskeniMi">
+                                    <md-button ng-click="degiskenSil(degisken.id)">
+                                        <i class="fa fa-ban" aria-hidden="true"></i> {{'DEGISKENSIL' | translate}}
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+
+                    </div>
+
+                </td>
+
+
+            </tr>
+
+
+        </tbody>
+    </table>
+
+
+
+
+</div>

@@ -1,0 +1,77 @@
+﻿<link href="../../Content/Css/styletable.css" rel="stylesheet" />
+<style>
+    .red {
+        color: red;
+    }
+
+    md-tooltip.tt-multiline ._md-content {
+        height: auto;
+    }
+</style>
+<div layout="row" layout-align="start">
+
+    <div flex-xs flex-gt-xs="50" layout="column" ng-init="arama=''">
+        <md-input-container>
+            <label>{{'ARAMA' | translate}}</label>
+           <input type="text" ng-model="arama" ng-change="kullaniciArama(arama)" />
+        </md-input-container>
+    </div>
+</div>
+
+
+<div class="table-responsive-vertical shadow-z-1 animated  bounceInLeft" style="margin-top:20px;">
+
+    <table id="table" class="table table-hover table-bordered table-striped table-mc-yellow">
+        <thead>
+            <tr>
+                <th >  </th>
+                <th>  <h2><b>No</b></h2></th>
+                <th><h2><b>  {{'AD' | translate}}</b></h2></th>
+                <th><h2><b>  {{'SOYAD' | translate}}</b></h2></th>
+                
+                <td ><a><h2><b> {{'EMAIL' | translate}}</b></h2></a></td>
+                <th><h2><b> {{'KULLANICITIPI' | translate}}</b></h2></th>
+               
+               
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr dir-paginate="kullanici in kullanicilar.source | itemsPerPage: sayfaBoyutu" total-items="kullanicilar.total" ng-class="{ 'red': false }">
+                <td data-title="" ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')"><h2><b><md-checkbox style="margin-bottom: 0 !important; " ng-model="kullanicilar.source[$index].menuSeciliMi" ng-change="kullaniciMenuYetkiDegistir(kullanicilar.source[$index].id,$index);"></md-checkbox> </b></h2></td>
+                <td data-title="No"><h2><b> {{$index+1}}</b></h2></td>
+                <td  data-title="{{'AD' | translate}}"><h2><b> {{kullanici.ad }}</b></h2></td>
+                <td data-title="{{'SOYAD' | translate}}"><a><h2><b> {{kullanici.soyad}}</b></h2></a></td>
+                <td data-title="{{'EMAIL' | translate}}"><a><h2><b> {{kullanici.email}}</b></h2></a></td>
+                <td data-title="{{'KULLANICITIPI' | translate}}" md-truncate>
+
+                    <h2><b>{{kullanici.unvan}} </b>  </h2>
+                </td>
+
+            </tr>
+
+        </tbody>
+    </table>
+   
+
+</div>
+
+<!--<md-content flex layout-padding >
+
+
+
+    <div layout="column" layout-align="top center">
+        <p style="text-align:center;"><h1 class="animated infinite pulse"><a ui-sref="KontrolEkleme" style="text-decoration:none;color:red;">Henüz Kontrol Eklemediniz.Kontrol Eklemek İçin Tıklayınız...</a></h1></p>
+
+
+
+    </div>
+
+
+</md-content>-->
+
+<dir-pagination-controls max-size="1"
+                         direction-links="true"
+                         boundary-links="true"
+                         on-page-change="sayfaGetir(arama,newPageNumber, sayfaBoyutu)" template-url="templates/dirPagination.tpl.html" layout="column" layout-align="center center">
+</dir-pagination-controls>

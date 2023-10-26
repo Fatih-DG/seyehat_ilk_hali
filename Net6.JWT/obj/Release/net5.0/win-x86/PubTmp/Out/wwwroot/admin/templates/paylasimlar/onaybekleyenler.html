@@ -1,0 +1,213 @@
+﻿<link href="../../Content/Css/styletable.css" rel="stylesheet" />
+<style>
+    td{
+        vertical-align:middle !important;
+    }
+    .red {
+    color: red;
+}
+    md-tooltip.tt-multiline ._md-content {
+    /*height: auto;*/
+}
+</style>
+
+<div layout-margin>
+
+
+
+    <div layout="row" layout-align="end">
+
+        <div flex-xs flex-gt-xs="50" layout="column">
+            <md-input-container>
+                <label>{{'PAYLASIMTIPI' | translate}}</label>
+                <md-select ng-model="seciliPaylasimTipi" ng-change="paylasimTipiDegisti()">
+                    <md-optgroup label="{{'PAYLASIMTIPI' | translate}}">
+                        <md-option selected ng-value="1"><b>{{'PAYLASIM' | translate}}</b></md-option>
+                        <md-option ng-value="2"><b>{{'YORUM' | translate}}</b></md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+
+
+    <div ng-show="paylasimlar.source.length>0">
+        <div layout="row" layout-align="start" class="hidets" ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')">
+
+            <div layout="column">
+
+
+                <md-checkbox style="margin-bottom: 0 !important; " ng-model="tumunuSec" ng-change="tumunuSec2(tumunuSec);">{{'TUMUNUSEC' | translate}}</md-checkbox>
+
+            </div>
+        </div>
+
+        <div class="table-responsive-vertical shadow-z-1 animated  bounceInLeft" style="margin-top:20px;">
+
+            <table id="table" class="table table-hover table-bordered table-striped table-mc-yellow">
+                <thead>
+                    <tr>
+                        <th ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')">  <h2><md-checkbox style="margin-bottom: 0 !important; " ng-model="tumunuSec" ng-change="tumunuSec2(tumunuSec);"></md-checkbox></h2></th>
+                        <th>  <h2><b>No</b></h2></th>
+                        <th><h2><b>  {{'BASLIK' | translate}}</b></h2></th>
+                        <th><h2><b>  {{'GONDEREN' | translate}}</b></h2></th>
+                        <th><h2><b>  {{'GONDERITIPI' | translate}}</b></h2></th>
+
+                        <th><h2><b> {{'KULLANICITIPI' | translate}}</b></h2></th>
+                        <th><h2><b>  {{'TARIH' | translate}}</b></h2></th>
+                        <th><h2><b>  {{'DURUM' | translate}}</b></h2></th>
+                        <th ><h2><b>  {{'ISLEMLER' | translate}}</b></h2></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="paylasim in paylasimlar.source | itemsPerPage: sayfaBoyutu" total-items="paylasimlar.total" ng-class="{ 'red': paylasim.redMi }">
+                        <td data-title="" ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')"><h2><b><md-checkbox style="margin-bottom: 0 !important; " ng-model="paylasimlar.source[$index].selected" ng-change="tumuSeciliMi(paylasimlar.source[$index].selected);"></md-checkbox> </b></h2></td>
+                        <td data-title="No"><h2><b> {{$index+1}}</b></h2></td>
+                        <td ng-click="showDialog($event,paylasim.baslik,paylasim.icerik)" data-title="{{'BASLIK' | translate}}"><h2><b> {{paylasim.baslik | substr:100}}</b></h2></td>
+                        <td data-title="{{'GONDEREN' | translate}}"><a><h2><b> {{paylasim.gonderen}}</b></h2></a></td>
+                        <td data-title="{{'GONDERITIPI' | translate}}"><h2><b><span ng-show="seciliPaylasimTipi==1">{{'PAYLASIM' | translate}}</span> <span ng-show="seciliPaylasimTipi==2">{{'YORUM' | translate}}</span>  </b></h2></td>
+
+                        <td data-title="{{'KULLANICITIPI' | translate}}" md-truncate>
+
+
+                            <h2><b>{{paylasim.kullaniciTipi}} </b>  </h2>
+                        </td>
+
+                        <td data-title="{{'TARIH' | translate}}"><h2><b>{{paylasim.tarih | tarihveSaatCevir}}</b></h2></td>
+                        <td data-title="{{'DURUM' | translate}}"><h2><b><span ng-if="paylasim.redMi">{{'REDEDILDI' | translate}}</span><span ng-if="!paylasim.redMi">{{'ONAYBEKLIYOR' | translate}}</span></b></h2></td>
+
+                        <td ng-if="seciliPaylasimTipi==1 || $root.iceriyorMu($root.ayarlar.roller,'Yönetici')" data-title="{{'ISLEMLER' | translate}}">
+                            <div layout="row" layout-align="end" flex>
+
+
+                                <md-menu>
+                                    <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                                        <i class="fas fa-ellipsis-v ng-scope"></i>
+                                        <md-tooltip md-direction="bottom">{{'ISLEMMENUSU' | translate}}</md-tooltip>
+                                    </md-button>
+
+
+                                    <md-menu-content width="4">
+                                        <!--<md-menu-divider></md-menu-divider>-->
+                                        <md-menu-item ng-if="seciliPaylasimTipi==1 && ($root.ayarlar.kullaniciID==paylasim.olusturanID || $root.iceriyorMu($root.ayarlar.roller,'Yönetici'))">
+                                            <md-button ng-if="$root.ayarlar.kullaniciID==paylasim.olusturanID " ui-sref="PaylasimDuzenle({haberID:paylasim.id,goruntulemeMi:'0'})">
+                                                <span ng-if="$root.ayarlar.kullaniciID==paylasim.olusturanID "><i class="fa fa-pencil-alt" aria-hidden="true"></i> {{'DUZENLE' | translate}}</span>
+
+                                            </md-button>
+                                            <md-button ng-if="$root.ayarlar.kullaniciID!=paylasim.olusturanID" ui-sref="PaylasimDuzenle({haberID:paylasim.id,goruntulemeMi:'1'})">
+
+                                                <span><i class="fa fa-pencil-alt" aria-hidden="true"></i> {{'GORUNTULE' | translate}}</span>
+                                            </md-button>
+
+                                        </md-menu-item>
+                                        <md-menu-item ng-if="seciliPaylasimTipi==1 && ($root.ayarlar.kullaniciID==paylasim.olusturanID || $root.iceriyorMu($root.ayarlar.roller,'Yönetici'))">
+                                            <md-button  ng-click="paylasimSil(paylasim.id,seciliPaylasimTipi)">
+                                                <span ><i class="fa fa-trash" aria-hidden="true"></i> {{'SIL' | translate}}</span>
+
+                                            </md-button>
+                                         
+
+                                        </md-menu-item>
+                                        <md-menu-item ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')">
+                                            <md-button ng-click="onayla(seciliPaylasimTipi,[paylasim.id])">
+                                                <i class="fa fa-check" aria-hidden="true"></i> {{'ONAYLA' | translate}}
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')">
+                                            <md-button ng-click="redEt(seciliPaylasimTipi,[paylasim.id])">
+                                                <i class="fa fa-ban" aria-hidden="true"></i> {{'REDET' | translate}}
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+
+                            </div>
+
+                        </td>
+                        <td ng-if="seciliPaylasimTipi==2 || $root.iceriyorMu($root.ayarlar.roller,'Yönetici')" data-title="{{'ISLEMLER' | translate}}">
+                            <div layout="row" layout-align="end" flex>
+
+
+                                <md-menu>
+                                    <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                                        <i class="fas fa-ellipsis-v ng-scope"></i>
+                                        <md-tooltip md-direction="bottom">{{'ISLEMMENUSU' | translate}}</md-tooltip>
+                                    </md-button>
+
+
+                                    <md-menu-content width="4">
+                                       
+                                        <md-menu-item >
+                                            <md-button ng-click="paylasimSil(paylasim.id,seciliPaylasimTipi)">
+                                                <span><i class="fa fa-trash" aria-hidden="true"></i> {{'SIL' | translate}}</span>
+
+                                            </md-button>
+
+
+                                        </md-menu-item>
+                                      
+                                      
+                                    </md-menu-content>
+                                </md-menu>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+            </table>
+            <div layout="row" layout-align="end" ng-show="butonGorunurlugu(paylasimlar.source) && $root.iceriyorMu($root.ayarlar.roller,'Yönetici')">
+                <md-button ng-click="topluOnay()">
+                    <i class="fa fa-check" aria-hidden="true"></i> {{'ONAYLA' | translate}}
+                </md-button>
+
+
+                <md-button ng-click="topluRedEt()">
+                    <i class="fa fa-ban" aria-hidden="true"></i> {{'REDET' | translate}}
+                </md-button>
+
+            </div>
+
+
+
+        </div>
+
+        <!--<md-content flex layout-padding >
+
+
+
+            <div layout="column" layout-align="top center">
+                <p style="text-align:center;"><h1 class="animated infinite pulse"><a ui-sref="KontrolEkleme" style="text-decoration:none;color:red;">Henüz Kontrol Eklemediniz.Kontrol Eklemek İçin Tıklayınız...</a></h1></p>
+
+
+
+            </div>
+
+
+        </md-content>-->
+
+        <dir-pagination-controls max-size="1"
+                                 direction-links="true"
+                                 boundary-links="true"
+                                 on-page-change="sayfaGetir(newPageNumber, sayfaBoyutu)" template-url="templates/dirPagination.tpl.html" layout="column" layout-align="center center">
+        </dir-pagination-controls>
+
+    </div>
+</div>
+<md-content flex layout-padding ng-show="paylasimlar.source.length==0">
+
+
+
+    <div layout="column" layout-align="top center">
+        <p style="text-align:center;"><h1 class="animated infinite pulse"><a style="text-decoration:none;color:red;">{{"ONAYLANACAKPAYLASIMVEHABERYOK" | translate}}</a></h1></p>
+
+
+
+    </div>
+
+
+</md-content>

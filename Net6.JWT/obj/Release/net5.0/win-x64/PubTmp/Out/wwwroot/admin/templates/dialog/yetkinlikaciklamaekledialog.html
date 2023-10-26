@@ -1,0 +1,43 @@
+﻿
+<style>
+    md-content {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
+
+
+
+<md-content>
+
+
+
+    <div layout="row" layout-align="end" flex>
+
+        <md-button class="md-icon-button md-primary" ng-click="kapat()">
+            <i style="color:black;" class="fa fa-2x fa-times" aria-hidden="true"></i>
+        </md-button>
+    </div>
+    <form ng-submit="ekle(degisken)" name="ekleme" layout-padding>
+
+
+
+        <div layout="row">
+          
+            <md-input-container class="md-block">
+                <label>Açıklama</label>
+                <textarea rows="3" md-no-asterisk name="faks" ng-model="aciklama" required></textarea>
+
+            </md-input-container>
+        </div>
+    
+
+        <div layout="row" layout-align="end" flex>
+
+            <md-button class="md-raised md-primary" type="submit">Ekle/Güncelle</md-button>
+        </div>
+
+    </form>
+</md-content>

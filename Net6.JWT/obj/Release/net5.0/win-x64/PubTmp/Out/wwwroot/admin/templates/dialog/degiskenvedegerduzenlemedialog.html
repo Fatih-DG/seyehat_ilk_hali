@@ -1,0 +1,56 @@
+﻿
+<style>
+    md-content {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
+
+
+
+<md-content>
+
+
+
+    <div layout="row" layout-align="end" flex>
+
+        <md-button class="md-icon-button md-primary" ng-click="kapat()">
+            <i style="color:black;" class="fa fa-2x fa-times" aria-hidden="true"></i>
+        </md-button>
+    </div>
+    <form ng-submit="degiskenGuncelle(degisken)" name="ekleme" layout-padding>
+
+        <md-input-container class="md-block">
+            <label>{{'DEGISKEN' | translate}}</label>
+            <input md-maxlength="500" md-minlength="3" md-no-asterisk required ng-model="degisken.degisken" ng-disabled="degisken.sistemDegiskeniMi">
+        </md-input-container>
+
+
+
+
+        
+            <md-input-container class="md-block">
+                <label>{{'ACIKLAMA' | translate}}</label>
+                <input md-maxlength="500" required name="ad" ng-model="degisken.aciklama">
+                
+
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>{{'DEGISKENDEGERI' | translate}}</label>
+                <input md-maxlength="500" md-minlength="3" md-no-asterisk name="faks" ng-model="degisken.deger" required>
+
+            </md-input-container>
+    
+     
+
+
+
+        <div layout="row" layout-align="end" flex>
+
+            <md-button class="md-raised md-primary" type="submit">{{"GUNCELLE" | translate}}</md-button>
+        </div>
+
+    </form>
+</md-content>

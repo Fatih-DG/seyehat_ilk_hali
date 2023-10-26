@@ -1,0 +1,48 @@
+﻿<md-dialog  style="min-width:320px;">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{"Değerlendirmeler" | translate}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="kapat()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content >
+            <md-list flex  >
+                
+                <md-list-item class="md-3-line" ng-repeat="puan in puanlar">
+
+
+                    <!--<div>{{puan.adSoyad}}</div>-->
+                    <div class="md-list-item-text">
+                        <h3> {{puan.adSoyad}}</h3>
+                        <p>
+                            <span ng-if="puan.hedefNot>0">Hedef Notu={{puan.hedefNot}} </span><br />
+
+                            <span ng-if="puan.yetkinlikNot>0">  Yetkinlik Notu {{puan.yetkinlikNot}}</span>
+</p>
+
+                    </div>
+                    <div class="percent-container" style="width:100px !important;margin: 10px">
+                        <percent-circle ng-click="degerlendirenlerinPuanlari(kullanici.id)" percent="puan.genelOrtalama" speed="30"></percent-circle>
+                    </div>
+               
+
+                    <md-divider></md-divider>
+                </md-list-item>
+               
+         
+             
+              
+                </md-list>
+</md-dialog-content>
+
+        <md-dialog-actions layout="row">
+         
+     
+        </md-dialog-actions>
+    </form>
+</md-dialog>

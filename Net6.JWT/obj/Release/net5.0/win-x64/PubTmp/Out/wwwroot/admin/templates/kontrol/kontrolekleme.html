@@ -1,0 +1,112 @@
+﻿<style>
+    .autocomplete-custom-template li {
+  border-bottom: 1px solid #ccc;
+  height: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  white-space: normal;
+}
+.autocomplete-custom-template li:last-child {
+  border-bottom-width: 0;
+}
+.autocomplete-custom-template .item-title,
+.autocomplete-custom-template .item-metadata {
+  display: block;
+  line-height: 2;
+}
+.autocomplete-custom-template .item-title md-icon {
+  height: 18px;
+  width: 18px;
+}
+
+</style>
+<textarea required ckeditor="{language:'tr',uiColor:'#111111'}" ng-model="$root.seri.detayBaslik"></textarea>
+<form ng-submit="kontrol.dolumTarihi.$valid ; kontrolEkle(kontrol);" name="form" >
+    <div layout="column" ng-cloak class="animated  bounceInLeft">
+        <md-content layout-padding layout="column">
+
+            <p>Dolumunu Yaptığınız  Yangın Söndürme Cihazlarının Sahibini(Müşteri) Seçiniz.</p>
+            <md-autocomplete required ng-disabled="isDisabled"
+                             md-no-cache="noCache"
+                             md-selected-item="selectedItem"
+                             md-search-text-change="searchTextChange(searchText)"
+                             md-search-text="searchText"
+                             md-selected-item-change="selectedItemChange(item)"
+                             md-items="item in querySearch(searchText)"
+                             md-item-text="item.firmaAciklama"
+                             md-min-length="1"
+                             placeholder="Müsteri Seç"
+                             md-menu-class="autocomplete-custom-template">
+                <md-item-template>
+                    <span class="item-title">
+                        <md-icon md-svg-icon="img/icons/octicon-repo.svg"></md-icon>
+                        <span> {{item.firmaAciklama}} </span>
+                    </span>
+                    <span class="item-metadata">
+                        <span>
+                            <strong>{{item.tel}}</strong>
+                        </span>
+                        <span>
+                            <strong>{{item.email}}</strong>
+                        </span>
+                    </span>
+                </md-item-template>
+
+            </md-autocomplete>
+
+        </md-content>
+    </div>
+
+
+    <div class="animated bounceInUp" ng-init="$root.baslik='Cihaz Kontrolü Ekleme'" ng-show="secildiMi">
+        <md-input-container class="md-block">
+            <label>Açıklama</label>
+            <textarea required ng-model="kontrol.aciklama" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+
+
+
+        <div flex>
+
+            <div flex-gt-md>
+                <h4>Cihazların Periyodik Bakım Aralığını Giriniz</h4>
+                <md-input-container class="md-block" flex-gt-md>
+                    <label>Periyodik Bakım Aralığı</label>
+                    <md-select required ng-model="kontrol.periyodikBakimAraligi">
+                        <md-option value="3">
+                            3 Ay (1 Yıl Garanti)
+                        </md-option>
+                        <md-option selected value="6">
+                            6 Ay (2 Yıl Garanti)
+                        </md-option>
+                        <md-option value="12">
+                            12 Ay (4 Yıl Garanti)
+                        </md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+
+            <div flex-gt-md class="md-block">
+                <h4>Cihazların Dolum Tarihini Seçiniz</h4>
+                <md-datepicker ng-required="true" ng-change="dolumTarihiDegisti(kontrol.dolumTarihi)" ng-model="kontrol.dolumTarihi" md-placeholder="Tarih Seç"></md-datepicker>
+                <div ng-messages="form.dolumTarihi.$error">
+                    <div ng-message="required">You must select a date.</div>
+                </div>
+            </div>
+        
+
+        </div>
+
+      
+
+
+
+
+
+        <div layout="row" layout-align="end" flex>
+
+            <md-button class="md-raised md-primary" type="submit">Kaydet</md-button>
+        </div>
+    </div>
+</form>

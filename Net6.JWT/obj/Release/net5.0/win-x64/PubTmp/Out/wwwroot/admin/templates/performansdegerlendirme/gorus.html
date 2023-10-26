@@ -1,0 +1,78 @@
+﻿
+
+
+<md-content layout-padding style="height:100%;">
+   
+    <md-content>
+        <div layout="row" layout-align="center center">
+            <div flex="70" flex-xs="100" flex-gt-md="70" flex-gt-sm="70">
+                <md-toolbar md-scroll-shrink>
+                    <div class="md-toolbar-tools">{{ad+" "+soyad}} için Görüşünüz</div>
+                </md-toolbar>
+
+
+
+                <section>
+                    <md-subheader class="md-primary">
+                     <form ng-submit="gorusEkle(gor)">
+                           
+                                 <md-input-container class="md-block">
+                                    <label>Görüşünüzü Buraya Yazınız</label>
+                                    <textarea ng-model="gor" md-maxlength="1000" rows="2" md-select-on-focus></textarea>
+                                </md-input-container>
+                               
+
+                        <div layout="row" layout-align="end" flex>
+                            <md-button  style="height:46px;" class="md-raised md-primary" type="submit">Görüş Ekle</md-button>
+                        </div>
+
+                           </form>
+                          
+
+                            <div layout-margin="" class="layout-margin ng-scope">
+                                <div layout="row" layout-align="start">
+                                    <div layout="column" flex>
+                                        <md-input-container flex>
+                                            <label>Dönem Seçiniz</label>
+                                            <md-select ng-model="seciliDonemId" ng-change="changeSeciliDonem()">
+                                                <md-optgroup label="Dönemler">
+                                                    <md-option ng-repeat="donem in donemler" ng-value="donem.id"><b>{{donem.donemAdi}}</b></md-option>
+
+                                                </md-optgroup>
+                                            </md-select>
+                                        </md-input-container>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                    </md-subheader>
+                    <md-list>
+                    <md-subheader ng-repeat-start="gorus in gorusler" class="md-no-sticky">{{gorus.tarih |  tarihveGunCevirdp}}</md-subheader>
+                    <md-list-item >
+                       
+                        <i class="fas fa-envelope fa-2x"></i>
+                        
+                        <p style="margin-left:10px;">{{gorus.gorus}}</p>
+                  
+                        <md-button class="md-icon-button" ng-click="gorusSil(gorus.id)">
+                            <i style="cursor:pointer"  class="fas fa-trash "></i>
+                        </md-button>
+                    </md-list-item>
+
+                    <md-divider ng-repeat-end></md-divider>
+
+                      
+                    </md-list>
+                </section>
+
+
+
+
+
+
+            </div>
+        </div>
+    </md-content>
+    </md-content>

@@ -1,0 +1,886 @@
+﻿
+<md-content>
+    <div layout="row" layout-align="center center">
+
+    </div>
+    <md-tabs md-dynamic-height md-border-bottom md-autoselect md-swipe-content md-selected="selectedTab">
+        <!--<md-button class="md-icon-button"><i  class="fa-2x fa fa-plus" aria-hidden="true"></i></md-button>-->
+
+        <md-tab label="Kurum Bazlı Performans">
+            <div layout-margin="" class="layout-margin ng-scope">
+                <div layout="row" layout-align="start" flex>
+                    <div layout="column">
+                        <md-input-container>
+                            <label>Dönemler</label>
+                            <md-select ng-model="seciliDonemler" multiple>
+                                <md-optgroup label="Dönemler">
+                                    <md-option ng-repeat="donem in donemler" ng-value="donem"><b>{{donem.donemAdi}}</b></md-option>
+
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                    <md-button ng-click="donemBazliVeriyiGoster()" style="height:46px;" class="md-raised md-primary" type="submit">Veriyi Göster</md-button>
+                </div>
+
+                <div layout="row" layout-align="start">
+
+
+                </div>
+            </div>
+            <!--<canvas id="base" class="chart-base" chart-type="type"
+        chart-data="data" chart-labels="labels"></canvas>-->
+            <div flex-gt-md="60" flex-xs="100" class="layout-margin ng-scope">
+
+                <div layout="row" layout-align="center center">
+                    <canvas id="base" class="chart-bar" chart-options="options"
+                            chart-data="data" chart-labels="labels" chart-colors="colors"
+                            chart-dataset-override="datasetOverride"></canvas>
+                </div>
+            </div>
+
+        </md-tab>
+
+        <md-tab label="Birim Bazlı Performans Özel">
+            <div layout-margin="" class="layout-margin ng-scope" style="overflow: auto;">
+
+
+                <div layout="row" layout-align="start">
+
+                    <div layout="row" flex layout-xs="column">
+                        <md-input-container flex>
+                            <label>Dönemler</label>
+                            <md-select ng-model="seciliDonemler" multiple>
+                                <md-optgroup label="Dönemler">
+                                    <md-option ng-repeat="donem in donemler" ng-value="donem"><b>{{donem.donemAdi}}</b></md-option>
+
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <!--<label>Birimler</label>-->
+                            <!--<md-select required ng-model="seciliBirimler" multiple>
+                            <md-optgroup label="Birimler">
+                                <md-option ng-click="seciliBirimlerDegisti()" ng-value="-1"><b>Tümü</b></md-option>
+
+                                <md-option ng-if="!birimlerinTumuSeciliMi" ng-value="birim.id" ng-repeat="birim in idariBirimler"><b>{{birim.ad}}</b></md-option>
+                            ""
+                            </md-optgroup>
+                        </md-select>-->
+
+
+                            <div style="max-width:500px;height:auto !important" angular-multi-select debug="true"
+                                 input-model="tumBirimler.children"
+                                 output-model="seciliBirimler"
+                                 dropdown-label="<[<# angularMultiSelectConstants.INTERNAL_STATS_TOTAL_LEAFS #> === undefined ? ' Seçilecek Birim Yok' :
+			<# angularMultiSelectConstants.INTERNAL_STATS_CHECKED_LEAFS #> === 0 ? ' Birim Seç' :
+				<# angularMultiSelectConstants.INTERNAL_STATS_CHECKED_LEAFS#> + <# angularMultiSelectConstants.INTERNAL_STATS_CHECKED_NODES #>
+    + '' + (<# angularMultiSelectConstants.INTERNAL_STATS_CHECKED_LEAFS #>
+        === 1 ? ' Birim Seçildi': ' Birim Seçildi')
+        ]>"
+        node-label="<[ birimAdi ]>
+            "
+            leaf-label="<[ birimAdi ]>
+                "
+                search-field="birimAdi"  output-filter="leafs_checked_nodes">
+</div>
+
+
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Gösterim Şekli</label>
+                            <md-select ng-model="birimBazliGosterim" ng-init="birimBazliGosterim=1">
+                                <md-optgroup label="Gösterim Şekli">
+                                    <md-option ng-value="1"><b>Grafik</b></md-option>
+                                    <md-option ng-value="2"><b>Tablo</b></md-option>
+
+
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <md-button ng-click="birimBazliVeriyiGoster(seciliDonemler,seciliBirimler)" style="height:46px;" class="md-raised md-primary" type="submit">Veriyi Göster</md-button>
+                    </div>
+                </div>
+
+
+            </div>
+            <div flex-gt-md="60" flex-xs="100" class="layout-margin ng-scope" ng-show="birimBazliGosterim==1">
+
+                <div layout="row" layout-align="center center">
+                    <canvas id="baseBirim" class="chart-horizontal-bar" chart-options="options"
+                            chart-data="dataBirimBazli" chart-labels="labelsBirimBazli" chart-colors="colors" chart-series="series"></canvas>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope">
+                <div layout="row" layout-align="center center">
+
+                    <table class="table" border="1" ng-if="birimBazliGosterim==2">
+
+                        <!--<caption>Güçlü Olduğunuz Yönler</caption>-->
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Birim Adı</th>
+                                <th scope="col">Hedef Ortalama(%)</th>
+                                <th scope="col">Yetkinlik Ortalama(%)</th>
+                                <th scope="col">Genel Ortalama(%)</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="label in labelsBirimBazli" ng-hide="$index==0">
+                                <td data-label="Birim Adı" style="width:30% ">
+
+                                    <b>
+                                        <span style="font-size:12px;">{{label}}</span>
+                                        <br />
+                                </td>
+                                <td data-label="Hedef Ortalama" style="text-align:center">
+                                    <span ng-show="dataBirimBazli[0][$index]==null">-</span>
+                                    <span ng-show="dataBirimBazli[0][$index]!=null">{{dataBirimBazli[0][$index]}}</span>
+
+                                    <br />
+                                </td>
+                                <td style="text-align:center" data-label="Yetkinlik Ortalama">
+                                    <span ng-show="dataBirimBazli[1][$index]==null">-</span>
+                                    <span ng-show="dataBirimBazli[1][$index]!=null">{{dataBirimBazli[1][$index]}}</span><br />
+                                </td>
+                                <td style="text-align:center" data-label="Genel Ortalama">
+                                    <span ng-show="dataBirimBazli[2][$index]==null">-</span>
+                                    <span ng-show="dataBirimBazli[2][$index]!=null">{{dataBirimBazli[2][$index]}}</span><br />
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </md-tab>
+        <md-tab label="Birim Bazlı Performans Genel">
+            <div layout-margin="" class="layout-margin ng-scope" style="overflow: auto;">
+
+
+                <div layout="row" layout-align="start">
+
+                    <div layout="row" flex layout-xs="column">
+                        <md-input-container flex>
+                            <label>Dönemler</label>
+                            <md-select ng-model="seciliDonemler" multiple>
+                                <md-optgroup label="Dönemler">
+                                    <md-option ng-repeat="donem in donemler" ng-value="donem"><b>{{donem.donemAdi}}</b></md-option>
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                      
+                            <!--<label>Birimler</label>-->
+                            <!--<md-select required ng-model="seciliBirimler" multiple>
+        <md-optgroup label="Birimler">
+            <md-option ng-click="seciliBirimlerDegisti()" ng-value="-1"><b>Tümü</b></md-option>
+
+            <md-option ng-if="!birimlerinTumuSeciliMi" ng-value="birim.id" ng-repeat="birim in idariBirimler"><b>{{birim.ad}}</b></md-option>
+        ""
+        </md-optgroup>
+    </md-select>-->
+
+                            <md-input-container flex>
+                                <label>Birimler</label>
+                                <md-select required ng-model="seciliBirimlerGenel" multiple>
+                                    <md-optgroup label="Birimler">
+
+                                        <md-option ng-value="1"><b>Fakülteler</b></md-option>
+                                        <md-option ng-value="3"><b>Daire Başkanlıkları</b></md-option>
+                                        <md-option ng-value="6"><b>Araştırma Merkezleri</b></md-option>
+                                        <md-option ng-value="4"><b>Kurullar</b></md-option>
+                                       
+                                        <md-option ng-value="2"><b>Enstitüler</b></md-option>
+                                        <md-option ng-value="5"><b>Koordinatörlükler</b></md-option>
+
+
+
+
+                                    </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+
+
+                     
+                        <md-input-container flex>
+                            <label>Gösterim Şekli</label>
+                            <md-select ng-model="birimBazliGosterim" ng-init="birimBazliGosterim=1">
+                                <md-optgroup label="Gösterim Şekli">
+                                    <md-option ng-value="1"><b>Grafik</b></md-option>
+                                    <md-option ng-value="2"><b>Tablo</b></md-option>
+
+
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <md-button ng-click="birimBazliVeriyiGosterGenel(seciliDonemler,seciliBirimlerGenel)" style="height:46px;" class="md-raised md-primary" type="submit">Veriyi Göster</md-button>
+                    </div>
+                </div>
+
+
+            </div>
+            <div flex-gt-md="60" flex-xs="100" class="layout-margin ng-scope" ng-show="birimBazliGosterim==1">
+
+                <div layout="row" layout-align="center center">
+                    <canvas id="baseBirim" class="chart-horizontal-bar" chart-options="options"
+                            chart-data="dataBirimBazli" chart-labels="labelsBirimBazli" chart-colors="colors" chart-series="series"></canvas>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope">
+                <div layout="row" layout-align="center center">
+
+                    <table class="table" border="1" ng-if="birimBazliGosterim==2">
+
+                        <!--<caption>Güçlü Olduğunuz Yönler</caption>-->
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Birim Adı</th>
+                                <th scope="col">Hedef Ortalama(%)</th>
+                                <th scope="col">Yetkinlik Ortalama(%)</th>
+                                <th scope="col">Genel Ortalama(%)</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="label in labelsBirimBazli" ng-hide="$index==0">
+                                <td data-label="Birim Adı" style="width:30% ">
+
+                                    <b>
+                                        <span style="font-size:12px;">{{label}}</span>
+                                        <br />
+                                </td>
+                                <td data-label="Hedef Ortalama" style="text-align:center">
+                                    <span ng-show="dataBirimBazli[0][$index]==null">-</span>
+                                    <span ng-show="dataBirimBazli[0][$index]!=null">{{dataBirimBazli[0][$index]}}</span>
+
+                                    <br />
+                                </td>
+                                <td style="text-align:center" data-label="Yetkinlik Ortalama">
+                                    <span ng-show="dataBirimBazli[1][$index]==null">-</span>
+                                    <span ng-show="dataBirimBazli[1][$index]!=null">{{dataBirimBazli[1][$index]}}</span><br />
+                                </td>
+                                <td style="text-align:center" data-label="Genel Ortalama">
+                                    <span ng-show="dataBirimBazli[2][$index]==null">-</span>
+                                    <span ng-show="dataBirimBazli[2][$index]!=null">{{dataBirimBazli[2][$index]}}</span><br />
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </md-tab>
+        <md-tab label="Ünvan Bazlı Performans">
+            <div layout-margin="" class="layout-margin ng-scope">
+
+
+                <div layout="row" layout-align="start">
+
+                    <div layout="row" flex layout-xs="column">
+                        <md-input-container flex>
+                            <label>Dönemler</label>
+                            <md-select ng-model="seciliDonemler" multiple>
+                                <md-optgroup label="Dönemler">
+                                    <md-option ng-repeat="donem in donemler" ng-value="donem"><b>{{donem.donemAdi}}</b></md-option>
+
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Ünvanlar</label>
+                            <md-select required ng-model="seciliUnvanlar" multiple>
+                                <md-optgroup label="Ünvanlar">
+
+                                    <md-option ng-value="294"><b>Daire Başkanı</b></md-option>
+                                    <md-option ng-value="302"><b>Şube Müdürü</b></md-option>
+                                    <md-option ng-value="234"><b>Öğretim Görevlisi</b></md-option>
+                                    <md-option ng-value="307"><b>Mühendis</b></md-option>
+                                    <md-option ng-click="seciliBirimlerDegisti()" ng-value="304"><b>Bilgisayar İşletmeni</b></md-option>
+
+
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Gösterim Şekli</label>
+                            <md-select ng-model="unvanBazliGosterim" ng-init="unvanBazliGosterim=1">
+                                <md-optgroup label="Gösterim Şekli">
+                                    <md-option ng-value="1"><b>Grafik</b></md-option>
+                                    <md-option ng-value="2"><b>Tablo</b></md-option>
+
+
+                                </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        <md-button ng-click="unvanBazliVeriyiGoster(seciliDonemler,seciliUnvanlar)" style="height:46px;" class="md-raised md-primary" type="submit">Veriyi Göster</md-button>
+                    </div>
+                </div>
+
+
+            </div>
+            <div flex-gt-md="60" flex-xs="100" class="layout-margin ng-scope" ng-if="unvanBazliGosterim==1">
+
+                <div layout="row" layout-align="center center">
+                    <canvas id="baseUnvan" class="chart-horizontal-bar" chart-options="options"
+                            chart-data="dataUnvanBazli" chart-labels="labelsUnvanBazli" chart-colors="colors" chart-series="series"></canvas>
+
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope">
+                <div layout="row" layout-align="center center">
+
+                    <table class="table" border="1" ng-if="unvanBazliGosterim==2">
+
+                        <!--<caption>Güçlü Olduğunuz Yönler</caption>-->
+
+                        <thead>
+                            <tr>
+                                <th scope="col">S.No</th>
+                                <th scope="col">Ad Soyad/Ünvan</th>
+                                <th scope="col">Birim Adı</th>
+                                <th scope="col">Hedef Ortalama(%)</th>
+                                <th scope="col">Yetkinlik Ortalama(%)</th>
+                                <th scope="col">Genel Ortalama(%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="label in labelsUnvanBazli" ng-hide="$index==0">
+                                <td data-label="S.No">
+
+                                    <b>
+                                        <span style="font-size:12px;">{{$index}}</span>
+                                    </b>
+                                    <br />
+                                </td>
+                                <td data-label="Ad Soyad/Ünvan" style="width:30% ">
+
+                                    <b>
+                                        <span style="font-size:12px;">{{label}}</span>
+                                        <br />
+                                </td>
+                                <td data-label="Birim Adı">
+
+                                    <b>
+                                        <span style="font-size:12px;">{{labelsUnvanBazliBirimAdi[$index-1]}}</span>
+                                        <br />
+                                </td>
+                                <td data-label="Hedef Ortalama" style="text-align:center">
+                                    <span ng-show="dataUnvanBazli[0][$index]==null">-</span>
+                                    <span ng-show="dataUnvanBazli[0][$index]!=null">{{dataUnvanBazli[0][$index]}}</span>
+
+                                    <br />
+                                </td>
+                                <td style="text-align:center" data-label="Yetkinlik Ortalama">
+                                    <span ng-show="dataUnvanBazli[1][$index]==null">-</span>
+                                    <span ng-show="dataUnvanBazli[1][$index]!=null">{{dataUnvanBazli[1][$index]}}</span><br />
+                                </td>
+                                <td style="text-align:center" data-label="Genel Ortalama">
+                                    <span ng-show="dataUnvanBazli[2][$index]==null">-</span>
+                                    <span ng-show="dataUnvanBazli[2][$index]!=null">{{dataUnvanBazli[2][$index]}}</span><br />
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+
+
+        </md-tab>
+        <md-tab label="Kişi Bazlı Performans">
+            <div layout-margin="" class="layout-margin ng-scope">
+
+                <div layout="row" flex layout-xs="column">
+                    <md-input-container flex>
+                        <label>Dönemler</label>
+                        <md-select ng-model="seciliDonemler" multiple>
+                            <md-optgroup label="Dönemler">
+                                <md-option ng-repeat="donem in donemler" ng-value="donem"><b>{{donem.donemAdi}}</b></md-option>
+
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <!--<label>Birimler</label>-->
+                        <!--<md-select required ng-model="seciliBirimler" multiple>
+                        <md-optgroup label="Birimler">
+                            <md-option ng-click="seciliBirimlerDegisti()" ng-value="-1"><b>Tümü</b></md-option>
+
+                            <md-option ng-if="!birimlerinTumuSeciliMi" ng-value="birim.id" ng-repeat="birim in idariBirimler"><b>{{birim.ad}}</b></md-option>
+
+                        </md-optgroup>
+                    </md-select>-->
+
+
+                        <div style="max-width:500px;height:auto !important" angular-multi-select debug="false"
+                             input-model="tumBirimler.children"
+                             output-model="seciliBirimler"
+                             dropdown-label="<[<# angularMultiSelectConstants.INTERNAL_STATS_TOTAL_LEAFS #> === undefined ? ' Seçilecek Birim Yok' :
+			<# angularMultiSelectConstants.INTERNAL_STATS_CHECKED_LEAFS #> === 0 ? ' Birim Seç' :
+				<# angularMultiSelectConstants.INTERNAL_STATS_CHECKED_LEAFS#> + <# angularMultiSelectConstants.INTERNAL_STATS_CHECKED_NODES #>
+    + '' + (<# angularMultiSelectConstants.INTERNAL_STATS_CHECKED_LEAFS #>
+        === 1 ? ' Birim Seçildi': ' Birim Seçildi')
+        ]>"
+        node-label="<[ birimAdi ]>
+            "
+            leaf-label="<[ birimAdi ]>
+                "
+                search-field="birimAdi"  output-filter="leafs_checked_nodes">
+</div>
+
+
+                    </md-input-container>
+
+
+
+
+
+                    <md-input-container flex>
+                        <label>Kullanıcılar</label>
+                        <md-select required ng-model="seciliKullanicilar" multiple ng-show="seciliBirimler.length>0">
+                            <md-select-header class="demo-select-header">
+                                <div class="search__container" style="padding-top: 10px;
+    padding-left: 10px;">
+                                  
+                                    <input ng-model="searchTerm" class="search__input"  ng-keyup='$event.keyCode == 13 '
+                                           ng-keydown='$event.stopPropagation($event)'
+                                           type="text"
+                                           placeholder="Ara" />
+                                </div>
+                            </md-select-header>
+
+                            <!--<md-input-container  style="margin:0 !important;margin-top: 20px !important;
+    width: 100%;">
+                               
+                            
+                             
+                                    <input ng-model="searchTerm"
+                                           ng-keyup='$event.keyCode == 13 '
+                                           ng-keydown='$event.stopPropagation($event)'
+                                           type="text"
+                                           placeholder="Ara"
+                                           class="header-searchbox md-text">
+
+                               
+
+                                </md-input-container>-->
+                                <md-optgroup label="Kullanıcılar">
+                                    <md-option ng-click="tumKullanicilariSec()" ng-value="-1"><b>Tümü</b></md-option>
+                                    <md-option ng-if="!tumkullanicilarSeciliMi" ng-value="kullanici.id" ng-repeat="kullanici in idariBirimKullanicilari | filter:searchTerm"><b>{{kullanici.ad+" "+ kullanici.soyad}}</b></md-option>
+
+                                </md-optgroup>
+</md-select>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Gösterim Şekli</label>
+                        <md-select ng-model="kisiBazliGosterim" ng-init="kisiBazliGosterim=1">
+                            <md-optgroup label="Gösterim Şekli">
+                                <md-option ng-value="1"><b>Grafik</b></md-option>
+                                <md-option ng-value="2"><b>Tablo</b></md-option>
+
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-button ng-click="kullaniciBazliVeriyiGoster(seciliDonemler,seciliKullanicilar)" style="height:46px;" class="md-raised md-primary" type="submit">Veriyi Göster</md-button>
+
+                </div>
+                <div flex-gt-md="60" flex-xs="100" class="layout-margin ng-scope">
+                    <div layout="row" layout-align="center center">
+                        <canvas ng-if="kisiBazliGosterim==1" id="baseKullanici" class="chart-horizontal-bar" chart-options="options"
+                                chart-data="dataKullaniciBazli" chart-labels="labelsKullaniciBazli" chart-colors="colors" chart-series="series"></canvas>
+                    </div>
+                </div>
+                <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope">
+                    <div layout="row" layout-align="center center">
+
+                        <table class="table" border="1" ng-if="kisiBazliGosterim==2">
+
+                            <!--<caption>Güçlü Olduğunuz Yönler</caption>-->
+
+                            <thead>
+                                <tr>
+                                    <th scope="col">Ad Soyad</th>
+                                    <th scope="col">Hedef Ortalama(%)</th>
+                                    <th scope="col">Yetkinlik Ortalama(%)</th>
+                                    <th scope="col">Genel Ortalama(%)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="label in labelsKullaniciBazli" ng-hide="$index==0">
+                                    <td data-label="Ad Soyad" style="width:30% ">
+
+                                        <b>
+                                            <span style="font-size:12px;">{{label}}</span>
+                                            <br />
+                                    </td>
+                                    <td data-label="Hedef Ortalama" style="text-align:center">
+                                        <span ng-show="dataKullaniciBazli[0][$index]==null">-</span>
+                                        <span ng-show="dataKullaniciBazli[0][$index]!=null">{{dataKullaniciBazli[0][$index]}}</span>
+
+                                        <br />
+                                    </td>
+                                    <td style="text-align:center" data-label="Yetkinlik Ortalama">
+                                        <span ng-show="dataKullaniciBazli[1][$index]==null">-</span>
+                                        <span ng-show="dataKullaniciBazli[1][$index]!=null">{{dataKullaniciBazli[1][$index]}}</span><br />
+                                    </td>
+                                    <td style="text-align:center" data-label="Genel Ortalama">
+                                        <span ng-show="dataKullaniciBazli[2][$index]==null">-</span>
+                                        <span ng-show="dataKullaniciBazli[2][$index]!=null">{{dataKullaniciBazli[2][$index]}}</span><br />
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </md-tab>
+
+        <md-tab label="Kişi Sayısı Bazlı Performans">
+            <div layout-margin="" class="layout-margin ng-scope">
+                <div layout="row" flex>
+
+                    <md-input-container flex>
+                        <label>Dönemler</label>
+                        <md-select ng-model="seciliDonemler" multiple>
+                            <md-optgroup label="Dönemler">
+                                <md-option ng-repeat="donem in donemler" ng-value="donem"><b>{{donem.donemAdi}}</b></md-option>
+
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+                    <md-input-container flex>
+                        <label>Gösterim Şekli</label>
+                        <md-select ng-model="kisiSayisiBazliGosterim" ng-init="kisiSayisiBazliGosterim=1">
+                            <md-optgroup label="Gösterim Şekli">
+                                <md-option ng-value="1"><b>Pasta</b></md-option>
+                                <md-option ng-value="2"><b>Polar Alan Grafiği</b></md-option>
+                                <md-option ng-value="3"><b>Çörek Grafik</b></md-option>
+                                <md-option ng-value="4"><b>Tablo</b></md-option>
+
+
+                            </md-optgroup>
+                        </md-select>
+                    </md-input-container>
+
+                    <md-button ng-click="genelSonuclariGoster()" style="height:46px;" class="md-raised md-primary" type="submit">Veriyi Göster</md-button>
+                </div>
+
+                <div layout="row" layout-align="start">
+
+
+                </div>
+            </div>
+            <!--<canvas id="base" class="chart-base" chart-type="type"
+        chart-data="data" chart-labels="labels"></canvas>-->
+            <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope" ng-if="kisiSayisiBazliGosterim==1">
+
+
+
+
+                <div layout="row" layout-xs="column" layout-align="center center">
+                    <div flex-xs="100" flex="50">
+                        <canvas id="pie" class="chart chart-pie" chart-options="optionsHedefGenelSonuclar"
+                                chart-data="genelData" chart-labels="labelsGenel"></canvas>
+
+
+                        <!--<p style="text-align:center">Hedef Genel Sonuçlar</p>-->
+                    </div>
+                    <div flex-xs="100" flex="50">
+                        <canvas id="pie2" class="chart chart-pie" chart-options="optionsYetkinlikGenelSonuclar"
+                                chart-data="genelData2" chart-labels="labelsGenel2"></canvas>
+                        <!--<p style="text-align:center">Yetkinlik Genel Sonuçlar</p>-->
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+            <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope" ng-if="kisiSayisiBazliGosterim==2">
+
+
+
+
+                <div layout="row" layout-xs="column" layout-align="center center">
+                    <div flex-xs="100" flex="50">
+                        <canvas id="pie" class="chart chart-polar-area" chart-options="optionsHedefGenelSonuclar"
+                                chart-data="genelData" chart-labels="labelsGenel"></canvas>
+                        <!--<p style="text-align:center">Hedef Genel Sonuçlar</p>-->
+                    </div>
+                    <div flex-xs="100" flex="50">
+                        <canvas id="pie2" class="chart chart-polar-area" chart-options="optionsYetkinlikGenelSonuclar"
+                                chart-data="genelData2" chart-labels="labelsGenel2"></canvas>
+                        <!--<p style="text-align:center">Yetkinlik Genel Sonuçlar</p>-->
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+            <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope" ng-if="kisiSayisiBazliGosterim==3">
+
+
+
+
+                <div layout="row" layout-xs="column" layout-align="center center">
+                    <div flex-xs="100" flex="50">
+                        <canvas id="pie" class="chart chart-doughnut" chart-options="optionsHedefGenelSonuclar"
+                                chart-data="genelData" chart-labels="labelsGenel"></canvas>
+                        <!--<p style="text-align:center">Hedef Genel Sonuçlar</p>-->
+                    </div>
+                    <div flex-xs="100" flex="50">
+                        <canvas id="pie2" class="chart chart-doughnut" chart-options="optionsYetkinlikGenelSonuclar"
+                                chart-data="genelData2" chart-labels="labelsGenel2"></canvas>
+                        <!--<p style="text-align:center">Yetkinlik Genel Sonuçlar</p>-->
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+            <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope" ng-if="kisiSayisiBazliGosterim==4">
+                <div layout="row" layout-align="center center">
+
+                    <table class="table" border="1">
+
+                        <caption>Hedef Bazlı Kişi Sayısı</caption>
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Hedef Ortalaması %100-90 Arası Kişi Sayısı</th>
+                                <th scope="col">Hedef Ortalaması %90-70 Arası Kişi Sayısı</th>
+                                <th scope="col">Hedef Ortalaması %70-50 Arası Kişi Sayısı</th>
+                                <th scope="col">Hedef Ortalaması %50-0 Arası Kişi Sayısı</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Hedef Ortalaması %100-90 Arası Kişi Sayısı" style="width:30% ">
+
+                                    {{genelData[0]}}
+                                    <br />
+                                </td>
+                                <td data-label="Hedef Ortalaması %90-70 Arası Kişi Sayısı" style="text-align:center">
+                                    {{genelData[1]}}
+
+                                    <br />
+                                </td>
+                                <td style="text-align:center" data-label="Hedef Ortalaması %70-50 Arası Kişi Sayısı">
+                                    {{genelData[2]}}
+                                    <br />
+                                </td>
+                                <td style="text-align:center" data-label="Hedef Ortalaması %50-0 Arası Kişi Sayısı">
+                                    {{genelData[3]}}
+                                    <br />
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <div flex-gt-md="100" flex-xs="100" class="layout-margin ng-scope" ng-if="kisiSayisiBazliGosterim==4">
+                <div layout="row" layout-align="center center">
+
+                    <table class="table" border="1">
+
+                        <caption>Yetkinlik Bazlı Kişi Sayısı</caption>
+
+                        <thead>
+                            <tr>
+                                <th scope="col">Yetkinlik Ortalaması %100-90 Arası Kişi Sayısı</th>
+                                <th scope="col">Yetkinlik Ortalaması %90-70 Arası Kişi Sayısı</th>
+                                <th scope="col">Yetkinlik Ortalaması %70-50 Arası Kişi Sayısı</th>
+                                <th scope="col">Yetkinlik Ortalaması %50-0 Arası Kişi Sayısı</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Hedef Ortalaması %100-90 Arası Kişi Sayısı" style="width:30% ">
+
+                                    {{genelData2[0]}}
+                                    <br />
+                                </td>
+                                <td data-label="Hedef Ortalaması %90-70 Arası Kişi Sayısı" style="text-align:center">
+                                    {{genelData2[1]}}
+
+                                    <br />
+                                </td>
+                                <td style="text-align:center" data-label="Hedef Ortalaması %70-50 Arası Kişi Sayısı">
+                                    {{genelData2[2]}}
+                                    <br />
+                                </td>
+                                <td style="text-align:center" data-label="Hedef Ortalaması %50-0 Arası Kişi Sayısı">
+                                    {{genelData2[3]}}
+                                    <br />
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </md-tab>
+    </md-tabs>
+
+
+
+
+
+    <style>
+        .table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+            .table caption {
+                font-size: 1.5em;
+                margin: .5em 0 .75em;
+            }
+
+            .table tr {
+                background-color: #f8f8f8;
+                border: 1px solid #ddd;
+                padding: .35em;
+            }
+
+            .table th,
+            .table td {
+                padding: .625em;
+                text-align: center;
+            }
+
+            .table th {
+                font-size: .85em;
+                letter-spacing: .1em;
+            }
+
+        @media screen and (max-width: 600px) {
+            .table {
+                border: 0;
+            }
+
+                .table caption {
+                    font-size: 1.3em;
+                }
+
+                .table thead {
+                    border: none;
+                    clip: rect(0 0 0 0);
+                    height: 1px;
+                    margin: -1px;
+                    overflow: hidden;
+                    padding: 0;
+                    position: absolute;
+                    width: 1px;
+                }
+
+                .table tr {
+                    border-bottom: 3px solid #ddd;
+                    display: block;
+                    margin-bottom: .625em;
+                }
+
+                .table td {
+                    border-bottom: 1px solid #ddd;
+                    display: block;
+                    font-size: .8em;
+                    text-align: right !important;
+                }
+
+                    .table td::before {
+                        content: attr(data-label);
+                        float: left;
+                        font-weight: bold;
+                    }
+
+                    .table td:last-child {
+                        border-bottom: 0;
+                    }
+        }
+
+        md-input-container {
+    display: inline-block;
+    position: initial;
+    padding: 2px;
+    margin: 18px 0;
+    vertical-align: middle;
+}
+
+
+
+
+
+            
+
+    
+
+
+    </style>
+
+
+
+</md-content>
+
+
+

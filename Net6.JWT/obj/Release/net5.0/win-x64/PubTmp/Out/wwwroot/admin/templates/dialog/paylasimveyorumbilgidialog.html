@@ -1,0 +1,25 @@
+﻿<md-dialog aria-label="List dialog" style="max-width: 500px;">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{"ICERIK" | translate}}</h2>   <span flex></span> <md-button class="md-icon-button" ng-click="cancel()">
+               
+            </md-button>
+        </div>
+    </md-toolbar>
+      <br /><br />
+    <md-content class="scrollme" flex layout-padding ng-scrollbar>
+       
+           <b> {{baslik}}</b> <br /><br /><p ng-bind-html="icerik | unsafe"></p>
+        
+    </md-content>
+     <md-dialog-actions>
+        
+            <md-button ng-click="closeDialog()" class="md-primary">
+          
+                 {{"KAPAT" | translate}}
+            
+        </md-button>'
+        
+    </md-dialog-actions>
+    
+</md-dialog>

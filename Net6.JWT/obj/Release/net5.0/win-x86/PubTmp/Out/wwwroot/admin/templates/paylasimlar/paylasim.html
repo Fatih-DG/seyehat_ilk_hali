@@ -1,0 +1,227 @@
+﻿<style>
+    .png-icon {
+        margin: 5px auto auto;
+        padding: 0;
+        display: inline-block;
+        background-repeat: no-repeat no-repeat;
+        pointer-events: none;
+    }
+
+    #container {
+        position: relative;
+    }
+
+    #nested {
+        position: absolute;
+        top: -20px;
+        left: 5px;
+        font-size: 200%;
+        font-weight: 100;
+        color: white;
+    }
+
+    .yorum {
+        width: 100%;
+        background: 0 0;
+        border: 0;
+        color: #262626;
+        font-size: inherit;
+        min-height: 18px;
+        max-height: 80px;
+        outline: 0;
+        padding: 0;
+        max-height: 500px;
+        resize: none;
+        height: auto;
+        /*padding-left: 10px;*/
+    }
+
+    .yorumUst {
+        border-top: 1px solid #efefef;
+        color: #999;
+        -webkit-flex-shrink: 0;
+        -ms-flex-negative: 0;
+        flex-shrink: 0;
+        font-size: 14px;
+        line-height: 18px;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        padding: 16px 0;
+    }
+
+    .kucukFont {
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    #container {
+        display: flex;
+        flex-flow: column;
+        min-height: 1px;
+        max-height: 300px;
+        padding: 0 5px;
+    }
+
+    #fixed-part {
+        flex-shrink: 0; /* or
+                       no height set but the full flex set :
+                       flex:1 0 60px;*/
+        height: 60px; /* can be avoid, see previous comment */
+    }
+
+    #dynamic-part {
+        flex: 1;
+        overflow: auto;
+    }
+
+    .content {
+        width: 100%;
+        height: 10px;
+        margin: 5px auto;
+    }
+
+    .scrollable .scrollable-slider {
+        -webkit-border-radius: 2px;
+        -moz-border-radius: 2px;
+        border-radius: 2px;
+        background-color: #ffffff;
+        background-image: linear-gradient(to right, #ffffff, #ffffff);
+        border: 1px solid #d40505;
+        /*display:none !important;*/
+        border: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    md-card md-card-title {
+        /*padding: 1px 16px 16px;*/
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 auto;
+        flex: 1 1 auto;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+    }
+</style>
+<div>
+    <md-content layout-xs="column" layout="row" layout-align="center" ng-scrollbar>
+
+        <div>
+      
+            <md-card style="max-width:640px;"  >
+                <md-card-header>
+                    <md-card-avatar>
+
+
+                        <img id="profileImage" ng-if="haber.profilResmi!=null" ng-src="{{haber.profilResmi}}">
+                        <div ng-if="haber.profilResmi==null" style="background-color:#793658; color: rgb(255, 255, 255);" id="profileImage" class="ng-binding">{{haber.haberiOlusturanAd | substr:1}}{{haber.haberiOlusturanSoyad | substr:1}}</div>
+
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-title" style="font-weight: 600;">{{haber.haberiOlusturanAd +" "+haber.haberiOlusturanSoyad }} </span>
+                        <span class="md-subhead">{{haber.haberiOlusturanBirimAdi}}</span>
+                    </md-card-header-text>
+                </md-card-header>
+                <!--<img src="../../images/1.jpg" />-->
+
+
+                <jk-carousel ng-if="haber.haberResimleri.length>0" maxyukseklik="{{haber.maxYukseklik}}" data="haber.haberResimleri" item-template-url="'templates/imagetemplate.html'">
+                </jk-carousel>
+                <md-card-actions>
+
+                </md-card-actions>
+                <md-card-title>
+                    <md-card-title-text>
+                        <!--<span class="md-headline">In-card actions</span>-->
+
+
+                        <span ng-if="haber.icerikler.length==1" class="md-subhead kucukFont"><b>{{haber.icerikler[0].haberBasligi}}</b></span>
+
+                        <p ng-if="haber.icerikler.length==1" class="kucukFont" ng-bind-html="haber.icerikler[0].haberIcerigi | unsafe">
+
+                        </p>
+
+                        <md-tabs md-selected="haber.seciliIndeks" md-dynamic-height md-border-bottom md-autoselect md-swipe-content ng-if="haber.icerikler.length>1">
+                            <!--<md-button class="md-icon-button"><i  class="fa-2x fa fa-plus" aria-hidden="true"></i></md-button>-->
+
+                            <md-tab ng-repeat="tab in  haber.icerikler" label="{{tab.dil}}">
+                                <p>
+                                    <span class="md-subhead kucukFont"><b>{{tab.haberBasligi}}</b></span>
+
+                                <p class="kucukFont" ng-bind-html="tab.haberIcerigi | unsafe"></p>
+
+                                </p>
+                            </md-tab>
+
+
+
+                        </md-tabs>
+
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-actions layout="column" layout-align="start start" ng-if="!haber.begenmeyeKapaliMi ||  !haber.yorumaKapaliMi">
+                    <md-card-icon-actions>
+                        <md-button class="md-icon-button"  ng-if="!haber.begenmeyeKapaliMi">
+                            <!--<i class="fa-2x far fa-heart"></i>-->
+                            <i style="color:white;text-shadow: 0px 0px 6px #781d46" class="fa-2x  fas fa-heart"></i>
+
+                      
+
+                        </md-button>
+                        <md-button class="md-icon-button" aria-label="yorum" ng-if="!haber.yorumaKapaliMi">
+                            <i ng-click="focus(haber.haberID)" style="color:white;text-shadow: 0px 0px 6px #781d46" class="fa-2x fa fa-comment"></i>
+                            <!--<i ng-if="haber.yorumaKapaliMi" class="fa-2x  fas fa-comment-slash"></i>-->
+                        </md-button>
+                    </md-card-icon-actions>
+
+
+                    <span ng-if="haber.begenmeSayisi>0 && !haber.begenmeyeKapaliMi" ng-click="begenenleriGoster(haber.haberID);" style="font-size:10pt;font-weight: 600;color:#262626;cursor:pointer;" class="md-subhead">{{haber.begenmeSayisi}} <span ng-show="haber.begenmeSayisi>1">{{'BEGENILER' | translate}} </span><span ng-show="haber.begenmeSayisi==1">{{'BEGENME' | translate}}</span> </span>
+
+                    <!--<md-button></md-button>
+                    <md-button></md-button>-->
+                </md-card-actions>
+                <md-card-content>
+
+
+                    <br />
+                    <div id="container" ng-scrollable="{scrollX:'none',scrollY:'right'}" ng-if="!haber.yorumaKapaliMi">
+
+
+
+                        <div id="dynamic-part">
+                            <ul style="list-style:none;    padding: 0;  word-wrap: break-word;" class="md-block">
+                                <li class="animeted bounceInDown" ng-repeat="yorum in haberler[$index].yorumlar"><span class="md-subhead kucukFont"><b>{{yorum.ad +' '+yorum.soyad}} </b> {{"   "+yorum.yorum}}</span> </li>
+
+                            </ul>
+
+                        </div>
+                    </div>
+
+
+                    <a ng-if="haber.toplamYorumSayisi>sayfaBoyutu && haber.toplamYorumSayisi>haber.yorumlar.length && !haber.yorumaKapaliMi" ng-click="getYorumlarPagination(haber.haberID,$index)" class="yorumYukleBtn"><md-tooltip md-direction="right">{{'TOPLAM' | translate}}{{":"+haber.toplamYorumSayisi}}</md-tooltip>{{'DAHAFAZLAYORUMYUKLE' | translate}}</a>
+                    <br />
+                    <span style="font-size:10px;letter-spacing:.2px;">{{haber.olusturulmaTarihi | getsaat}}</span>
+
+                </md-card-content>
+
+             
+
+
+            </md-card>
+        </div>
+
+
+    </md-content>
+
+
+
+</div>
+
+
+
+

@@ -1,0 +1,38 @@
+﻿<md-dialog aria-label="Kontrol  Tarihi ">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Kontrol Yaptığınız Tarihini Seçiniz</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div flex-gt-md class="md-block">
+                <h4>Kontrol Yaptığınız Tarihini Seçiniz</h4>
+                <md-datepicker ng-required="true"  ng-model="tarih" md-placeholder="Tarih Seç"></md-datepicker>
+             
+            </div>
+           
+             
+        
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+           
+            <span flex></span>
+            <md-button ng-click="close()">
+              İptal
+            </md-button>
+            <md-button ng-click="$root.kontrolYapildiIsaretle(kontrolId, kacinci,tarih);close();">
+                Kaydet
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
+
+
+

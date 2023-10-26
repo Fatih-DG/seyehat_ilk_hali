@@ -1,0 +1,247 @@
+﻿
+
+
+
+    <!--<div id="calendar" fc fc-options="calendarOptions" style="width: 100%;" ng-model="events">  </div>-->
+
+<style>
+    [ng\:cloak], [ng-cloak], .ng-cloak {
+        display: none;
+    }
+
+    .submitForm {
+        width: 100%;
+    }
+
+    .validation {
+        padding-top: 5px;
+        display: none;
+        color: red;
+    }
+
+    .input-error {
+        display: block;
+    }
+
+
+</style>
+   
+        <md-toolbar>
+            <h2 class="md-toolbar-tools"><span>Multi Step Form</span></h2>
+        </md-toolbar>
+        <md-progress-linear md-mode="determinate" class="md-accent" value="{{progressValue}}"></md-progress-linear>
+        <md-content class="md-padding" layout-xs="column" layout="row" layout-align="center center">
+            <div flex-xs flex-gt-xs="40" layout="column" layout-align="center center">
+                <form name="multiStepForm" id="submitForm" class="submitForm form-validation" role="form" novalidate>
+                    <div class="animate-switch-container" ng-switch on="stage" ng-class="{forward: direction, backward:!direction}">
+
+                        <!--
+                        |==========================================================================
+                        | Stage 0
+                        |==========================================================================
+                        -->
+                        <md-card class="card-40-center animate-switch stepCard" md-theme-watch ng-switch-default>
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">Welcome to the form.</span>
+                                    <span class="md-subhead">This is a multistep form built with Angular Material</span>
+                                </md-card-title-text>
+
+                                <md-card-title-media>
+                                    <div class="md-media-lg card-media"></div>
+                                    <button class="md-raised md-primary md-button md-ink-ripple" type="button" ng-click="next('stage1')">
+                                        <span class="ng-scope">Start</span>
+                                        <div class="md-ripple-container" style=""></div>
+                                    </button>
+                                </md-card-title-media>
+                            </md-card-title>
+                        </md-card>
+
+                        <!--
+                        |==========================================================================
+                        | Stage 1
+                        |==========================================================================
+                        -->
+                        <md-card class="card-40-center animate-switch stepCard" md-theme-watch ng-switch-when="stage1">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">Enter your personal details</span>
+
+                                    <!-- first name -->
+                                    <md-card-content>
+                                        <div layout="row">
+
+                                            <!-- First Name -->
+                                            <md-input-container flex="50">
+                                                <label>First Name</label>
+                                                <input required name="firstName" ng-model="formParams.firstName">
+                                                <div class="validation" ng-class="{'input-error': formValidation && multiStepForm.firstName.$error.required}">This is required.</div>
+                                            </md-input-container>
+
+                                            <!-- Last Name -->
+                                            <md-input-container flex="50">
+                                                <label>Last Name</label>
+                                                <input required name="lastName" ng-model="formParams.lastName">
+                                                <div class="validation" ng-class="{'input-error': formValidation && multiStepForm.lastName.$error.required}">This is required.</div>
+                                            </md-input-container>
+
+                                        </div>
+
+                                        <div layout="row">
+                                            <!-- Gender -->
+                                            <md-input-container flex="100">
+                                                <label>Gender </label>
+
+                                                <md-select name="genderValue" ng-model="formParams.genderValue" required>
+                                                    <md-option><em>None</em></md-option>
+                                                    <md-option ng-repeat="sexe in genders" ng-value="sexe">
+                                                        {{sexe}}
+                                                    </md-option>
+                                                </md-select>
+                                                <div class="validation" ng-class="{'input-error': formValidation && multiStepForm.genderValue.$error.required}">This is required.</div>
+                                            </md-input-container>
+                                        </div>
+                                    </md-card-content>
+
+                                    <!-- navigation -->
+                                    <md-card-title-media></md-card-title-media>
+
+                            </md-card-title>
+
+                            <!-- buttons -->
+                            <md-card-actions layout="row" layout-align="end center">
+                                <button type="button" class="md-raised md-warn md-button md-ink-ripple" ng-click="back('')">
+                                    Back
+                                </button>
+                                <button type="button" class="md-raised md-warn md-button md-ink-ripple" ng-click="next('stage2')">
+                                    Next
+                                </button>
+                            </md-card-actions>
+
+                        </md-card>
+
+                        <!--
+                        |==========================================================================
+                        | Stage 2
+                        |==========================================================================
+                        -->
+                        <md-card class="card-40-center animate-switch stepCard" md-theme-watch ng-switch-when="stage2">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">Enter your message</span>
+
+                                    <md-card-content>
+                                        <div layout="row">
+                                            <md-input-container flex="100">
+                                                <textarea rows="3" type="text" required name="messageBody" ng-model="formParams.messageBody"></textarea>
+                                                <div class="validation" ng-class="{'input-error': formValidation && multiStepForm.messageBody.$error.required}">This is required.</div>
+                                            </md-input-container>
+                                        </div>
+                                    </md-card-content>
+                                    <md-card-title-media></md-card-title-media>
+                                </md-card-title-text>
+                            </md-card-title>
+
+                            <!-- buttons -->
+                            <md-card-actions layout="row" layout-align="end center">
+                                <button type="button" class="md-raised md-warn md-button md-ink-ripple" ng-click="back('stage1')">
+                                    Back
+                                </button>
+                                <button type="button" class="md-raised md-warn md-button md-ink-ripple" ng-click="next('stage3')">
+                                    Next
+                                </button>
+                            </md-card-actions>
+                        </md-card>
+
+                        <!--
+                        |==========================================================================
+                        | Stage 3
+                        |==========================================================================
+                        -->
+                        <md-card class="card-40-center animate-switch stepCard" md-theme-watch ng-switch-when="stage3">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">Summary</span>
+                                    <span class="md-subhead">First name: {{formParams.firstName}}</span>
+                                    <span class="md-subhead">Last name: {{formParams.lastName}}</span>
+                                    <span class="md-subhead">Message Body: {{formParams.messageBody}}</span>
+                                </md-card-title-text>
+
+                                <md-card-title-media>
+                                    <button class="md-raised md-warn md-button md-ink-ripple" type="button" ng-click="back('stage2')">
+                                        <span class="ng-scope">Back</span>
+                                    </button>
+                                    <button class="md-raised md-warn md-button md-ink-ripple" type="button" ng-click="submitForm()">
+                                        <span class="ng-scope">Submit</span>
+                                    </button>
+                                </md-card-title-media>
+                            </md-card-title>
+                        </md-card>
+
+                        <!--
+                        |==========================================================================
+                        | SUBMIT
+                        |==========================================================================
+                        -->
+                        <md-card class="card-40-center animate-switch stepCard" md-theme-watch ng-switch-when="success">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">Thank you</span>
+                                    <span class="md-subhead">Your message has been sent.<br>You should receive a confirmation email.</span>
+                                </md-card-title-text>
+
+                                <md-card-title-media>
+                                    <button class="md-raised md-warn md-button md-ink-ripple" type="button" ng-click="reset()">
+                                        <span class="ng-scope">Send Another</span>
+                                    </button>
+                                </md-card-title-media>
+                            </md-card-title>
+                        </md-card>
+
+                        <!--
+                        |==========================================================================
+                        | Error
+                        |==========================================================================
+                        -->
+                        <md-card class="card-40-center" md-theme-watch class="animate-switch" ng-switch-when="error">
+                            <md-card-title>
+                                <md-card-title-text>
+                                    <span class="md-headline">Error</span>
+                                    <span class="md-subhead">here was an error when attempting to submit your request.<br>Please try again later</span>
+                                </md-card-title-text>
+                                <md-card-title-media>
+                                    <button class="md-raised md-warn md-button md-ink-ripple" type="button" ng-click="reset()">
+                                        <span class="ng-scope">Try Again</span>
+                                    </button>
+                                </md-card-title-media>
+                            </md-card-title>
+                        </md-card>
+
+                    </div>
+                </form>
+            </div>
+        </md-content>
+
+        <!--
+        |==========================================================================
+        | OUTPUT
+        |==========================================================================
+        -->
+
+        <md-content class="md-padding" layout="row" layout-wrap style="width: 300px;">
+            <md-card md-theme-watch class="animate-switch" flex="100">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Output Data</span>
+                        <button type="button" class="md-raised md-warn md-button md-ink-ripple"
+                                ng-click="toggleJSONView = !toggleJSONView">
+                            Toggle Object
+                        </button>
+                    </md-card-title-text>
+
+                </md-card-title>
+                <pre ng-show="toggleJSONView"> {{ formParams | json }}</pre>
+            </md-card>
+        </md-content>
+
+

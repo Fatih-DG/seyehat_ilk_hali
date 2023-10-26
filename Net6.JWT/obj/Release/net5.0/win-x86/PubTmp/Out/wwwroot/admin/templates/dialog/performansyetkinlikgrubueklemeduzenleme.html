@@ -1,0 +1,74 @@
+﻿
+<style>
+    md-content {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+</style>
+
+
+<style>
+    /*md-input-container {
+    display: inline-block;
+    position: relative;
+    padding: 2px;
+     margin: 4px 0; 
+    vertical-align: middle;
+}*/
+</style>
+<md-dialog   >
+
+    
+ 
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2><span ng-if="id==-1">Grup Ekle</span><span ng-if="id!=-1">Grup Güncelleme</span></h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <form ng-submit="GrupEkleveyaGuncelle()" layout-padding>
+
+        <md-input-container class="md-block">
+            <label>Grup Adı</label>
+            <input type="text" required ng-model="veriler.ad">
+
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Birimleri Seçiniz</label>
+            <md-select required ng-model="veriler.liste1" multiple>
+                <md-optgroup label="Birimler">
+                    <md-option ng-value="birim.id" ng-repeat="birim in idariBirimler"><b>{{birim.ad}}</b></md-option>
+
+                </md-optgroup>
+            </md-select>
+
+
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Ünvaları Seçiniz</label>
+            <md-select required ng-model="veriler.liste2" multiple>
+                <md-optgroup label="Ünvanlar">
+                    <md-option ng-value="unvan.id" ng-repeat="unvan in unvanlar"><b>{{unvan.ad}}</b></md-option>
+
+                </md-optgroup>
+            </md-select>
+            </md-input-container>
+       
+
+
+
+
+            <div layout="row" layout-align="end" flex>
+                <md-button ng-click="cancel()" class="md-raised md-primary" type="button">{{"VAZGEC" | translate}}</md-button>
+                <md-button ng-if="id!=-1" class="md-raised md-primary" type="submit">{{"Güncelle" | translate}}</md-button>
+                <md-button ng-if="id==-1" class="md-raised md-primary" type="submit">{{"EKLE" | translate}}</md-button>
+            </div>
+
+</form>
+</md-dialog>

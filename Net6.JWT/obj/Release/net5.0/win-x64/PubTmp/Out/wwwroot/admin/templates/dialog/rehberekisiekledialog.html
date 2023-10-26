@@ -1,0 +1,89 @@
+﻿
+<style>
+    md-content {
+        display: block;
+        position: relative;
+        overflow: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    md-dialog {
+        min-width: 600px;
+    }
+</style>
+
+
+<style>
+    md-input-container {
+    display: inline-block;
+    position: relative;
+    padding: 2px;
+     margin: 4px 0; 
+    vertical-align: middle;
+}
+</style>
+<md-dialog style="min-height: 500px !important; min-width: 300px !important; height: 610px ; width: 600px ; ">
+
+    
+ 
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2><span ng-if="guncellemeMi==false">Kişi Ekle</span><span ng-if="guncellemeMi==true">Kişi Güncelleme</span></h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="fill: rgba(255, 255, 255, 1);transform: ;msFilter:;"><path d="M20 3H4c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 19V7h16l.001 12H4z"></path><path d="m15.707 10.707-1.414-1.414L12 11.586 9.707 9.293l-1.414 1.414L10.586 13l-2.293 2.293 1.414 1.414L12 14.414l2.293 2.293 1.414-1.414L13.414 13z"></path></svg>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <form ng-submit="RehbereKisiEkleVeyaGuncelle(kisi,guncellemeMi==true)" name="ekleme" layout-padding >
+
+
+        <md-input-container class="md-block" >
+            <label>Ad</label>
+
+            <input type="text" required ng-model="kisi.ad">
+
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Soyad</label>
+
+            <input type="text" required ng-model="kisi.soyad">
+
+        </md-input-container>
+
+
+
+        <md-input-container class="md-block">
+            <label>Unvan</label>
+
+            <input type="text" required ng-model="kisi.unvan">
+        </md-input-container>
+
+
+        <md-input-container class="md-block">
+            <label>Dahili No</label>
+            <input  type="text" ng-model="kisi.dahiliNo">
+
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Harici No</label>
+            <input type="text" ng-model="kisi.hariciNo">
+
+        </md-input-container>
+
+        <md-input-container class="md-block">
+            <label>Birimi</label>
+
+            <input type="text" required ng-model="kisi.birimi">
+        </md-input-container>
+
+
+        <div layout="row" layout-align="end" flex>
+            <md-button ng-click="cancel()" class="md-raised md-primary" type="button">Vazgeç</md-button>
+            <md-button ng-if="guncellemeMi" class="md-raised md-primary" type="submit">Güncelle</md-button>
+            <md-button ng-if="!guncellemeMi" class="md-raised md-primary" type="submit">EKLE</md-button>
+        </div>
+
+    </form>
+</md-dialog>

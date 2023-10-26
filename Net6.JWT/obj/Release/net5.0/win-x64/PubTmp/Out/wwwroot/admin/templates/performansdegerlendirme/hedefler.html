@@ -1,0 +1,246 @@
+﻿
+<md-content>
+
+    <div layout="row" layout-align="end end">
+        <md-button ng-if="!kullaniciFormuKapattiMi && selected.length==1" class="md-raised md-primary" ng-click="hedefEkleDialog(seciliDonemId,'',false,selected);" type="button">Alt Hedef Ekle</md-button>
+        <md-button ng-if="!kullaniciFormuKapattiMi && selected.length>0 " class="md-raised md-primary" ng-click="hedefleriKullaniciyaAtaDialog();" type="button">Personele Seçili  Hedefleri Ata</md-button>
+        <md-button  ng-if="toplam<100" class="md-raised md-primary" ng-click="hedefEkleDialog(seciliDonemId,'',false,-1);" type="button">Hedef Ekle</md-button>
+        <md-button ng-if="toplam==100 && !kullaniciFormuKapattiMi" class="md-raised md-primary" ng-click="hedefDoneminiKapat(seciliDonemId);" type="button">Formu Değişikliğe Kapat</md-button>
+
+
+
+    </div>
+    <div layout-margin="" class="layout-margin ng-scope">
+
+
+        <div layout="row" layout-align="start">
+
+            <div flex-xs flex-gt-xs="50" layout="column">
+                <md-input-container>
+                    <label>Hedef Dönemi</label>
+                    <md-select ng-model="seciliDonemId" ng-change='hedefDonemiDegisti(seciliDonemId)'>
+                        <md-optgroup label="Hedef Dönemi">
+                            <md-option ng-repeat="donem in donemler" ng-value="donem.id"><b>{{donem.donemAdi}}</b></md-option>
+
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+        <div layout="column" layout-align="top center" ng-if="hedefler.length==0">
+            <p style="text-align:center;"><h3 class="animated infinite pulse"><a style="text-decoration:none;color:red;">{{seciliDonem.donemAdi}} Döneminde Eklenmiş Hedef Bulanamadı.</a></h3></p>
+
+
+
+        </div>
+        <!--<md-radio-group ng-model="selected">-->
+       
+
+        <table class="table" ng-if="hedefler.length>0">
+            <!--<div layout="row" layout-align="start"  ng-if="kullaniciFormuKapattiMi">
+        <span><b>Not:</b><span >Hedef Formunu Kapattınız.Hedeflerinizin Değerlendirilmesini Bekleyiniz.</span></span>
+
+
+    </div>-->
+            <div layout="row" layout-align="center center" ng-if="hedefler.length>0">
+                <span>Hedeflerin Toplam Ağırlığı</span>
+
+
+            </div>
+            <div layout="row" layout-align="center center" ng-if="hedefler.length>0">
+
+                <div class="percent-container" style="width: 100px !important;margin: 10px 40%;">
+                    <percent-circle percent="toplam" speed="20"></percent-circle>
+                </div>
+
+
+            </div>
+            <div style="font-weight:bolder" layout="row" layout-align="center center" ng-if="hedefler.length>0">
+                <span>{{seciliDonem.donemAdi}} Hedefleriniz</span>
+
+
+            </div>
+            <thead>
+                <tr>
+                    <th ng-if="!kullaniciFormuKapattiMi" scope="col" style="width:20px;">
+                        Seçim
+                    </th>
+                    <th scope="col">S.No</th>
+                    <th scope="col">Hedef Tipi</th>
+                    <th scope="col">Hedef</th>
+                    <th scope="col">Başlangıç/Bitiş Tarihi</th>
+                    <th scope="col">Gösterge Türü</th>
+                    <th scope="col">Hedeflenen</th>
+                    <!--<th scope="col">Üst beklenen</th>-->
+                    <th scope="col">Ağırlık Yüzde({{toplam}})</th>
+                    <th scope="col" ng-if="!kullaniciFormuKapattiMi">İşlemler</th>
+                    <th scope="col">Tamamlandı Mı</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat-start="hedef in hedefler">
+                    <td ng-if="!kullaniciFormuKapattiMi" data-label="seçim" style="width:10px;">
+                        <!--<md-checkbox  flex
+                                 ng-value="hedef.id"
+                                 class="md-primary">
+
+
+
+                </md-checkbox>-->
+
+                        <md-checkbox ng-checked="exists(hedef.id, selected)" ng-click="toggle(hedef.id, selected)">
+
+                        </md-checkbox>
+
+                    </td>
+                    <td data-label="S.No">{{$index+1}}</td>
+                    <td data-label="Hedef Tipi"><span ng-if="hedef.hedefTipi==1">Sözel</span><span ng-if="hedef.hedefTipi==2">Sayısal</span></td>
+                    <td data-label="Hedef">{{hedef.hedef}} </td>
+                    <td data-label="Başlangıç/Bitiş Tarihi">{{hedef.baslangicTarihi | tarihCevir}}-{{hedef.bitisTarihi | tarihCevir}}</td>
+                    <td data-label="Gösterge Türü">{{hedef.altBeklenen}}</td>
+                    <td data-label="Hedeflenen">{{hedef.beklenen}}</td>
+                    <!--<td data-label="Üst beklenen">{{hedef.ustBeklenen}}</td>-->
+
+                    <td data-label="Ağırlık Yüzde({{toplam}})">{{hedef.agirlikYuzde}}</td>
+                    <td data-label="İşlemler" ng-if="!kullaniciFormuKapattiMi">
+
+                        <md-button ng-click='hedefSil(hedef.id);' class="md-icon-button">
+                            <md-tooltip md-direction="left">Sil</md-tooltip>
+                            <i class="fas fa-trash-alt"></i>
+                        </md-button>
+                        <md-button ng-click='hedefEkleDialog(seciliDonemId,hedef,true);' class="md-icon-button">
+                            <md-tooltip md-direction="left">Düzenle</md-tooltip>
+                            <i class="fas fa-pencil-alt"></i>
+                        </md-button>
+                    </td>
+                    <td data-label="Tamamlandı Mı">
+                        <md-checkbox ng-change="hedefTamamla(hedef.id,$index,0,false)" ng-disabled="hedef.tamamlandiMi" ng-model="hedef.tamamlandiMi">
+
+
+                        </md-checkbox>
+                    </td>
+                </tr>
+                <tr ng-repeat-end ng-repeat="hedef2 in hedef.hedefler" style="background-color:lightyellow;font-size:70%;">
+                    <td>
+                        <md-checkbox ng-checked="exists(hedef2.id, selected)" ng-click="toggle(hedef2.id, selected)">
+
+                        </md-checkbox>
+                    </td>
+                    <td data-label="S.No">{{$parent.$index+1}}.{{$index+1}}</td>
+
+                    <td data-label="Hedef Tipi"><span ng-if="hedef2.hedefTipi==1">Sözel/Alt Hedef</span><span ng-if="hedef2.hedefTipi==2">Sayısal/Alt Hedef</span></td>
+                    <td data-label="Hedef">{{hedef2.hedef}} </td>
+                    <td data-label="Başlangıç/Bitiş Tarihi">{{hedef2.baslangicTarihi | tarihCevir}}-{{hedef2.bitisTarihi | tarihCevir}}</td>
+                    <td data-label="Gösterge Türü">{{hedef2.altBeklenen}}</td>
+                    <td data-label="Hedeflenen">{{hedef2.beklenen}}</td>
+                    <td data-label="Ağırlık Yüzde({{toplam}})">{{hedef2.agirlikYuzde}}</td>
+                    <td data-label="İşlemler" ng-if="!kullaniciFormuKapattiMi">
+
+                        <md-button ng-click='hedefSil(hedef2.id);' class="md-icon-button">
+                            <md-tooltip md-direction="left">Sil</md-tooltip>
+                            <i class="fas fa-trash-alt"></i>
+                        </md-button>
+                        <md-button ng-click='hedefEkleDialog(seciliDonemId,hedef2,true,-1);' class="md-icon-button">
+                            <md-tooltip md-direction="left">Düzenle</md-tooltip>
+                            <i class="fas fa-pencil-alt"></i>
+                        </md-button>
+
+                    </td>
+                    <td data-label="Tamamlandı Mı">
+                        <md-checkbox ng-change="hedefTamamla(hedef2.id,$parent.$index,$index,true)" ng-disabled="hedef2.tamamlandiMi" ng-model="hedef2.tamamlandiMi">
+
+
+                        </md-checkbox>
+
+
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+   
+           <!--</md-radio-group>-->
+            </div>
+        <style>
+
+            .table {
+                border: 1px solid #ccc;
+                border-collapse: collapse;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                table-layout: fixed;
+            }
+
+                .table caption {
+                    font-size: 1.5em;
+                    margin: .5em 0 .75em;
+                }
+
+                .table tr {
+                    background-color: #f8f8f8;
+                    border: 1px solid #ddd;
+                    padding: .35em;
+                }
+
+                .table th,
+                .table td {
+                    padding: .625em;
+                    text-align: center;
+                }
+
+                .table th {
+                    font-size: .85em;
+                    letter-spacing: .1em;
+                }
+
+            @media screen and (max-width: 600px) {
+                .table {
+                    border: 0;
+                }
+
+                    .table caption {
+                        font-size: 1.3em;
+                    }
+
+                    .table thead {
+                        border: none;
+                        clip: rect(0 0 0 0);
+                        height: 1px;
+                        margin: -1px;
+                        overflow: hidden;
+                        padding: 0;
+                        position: absolute;
+                        width: 1px;
+                    }
+
+                    .table tr {
+                        border-bottom: 3px solid #ddd;
+                        display: block;
+                        margin-bottom: .625em;
+                    }
+
+                    .table td {
+                        border-bottom: 1px solid #ddd;
+                        display: block;
+                        font-size: .8em;
+                        text-align: right;
+                    }
+
+                        .table td::before {
+                            content: attr(data-label);
+                            float: left;
+                            font-weight: bold;
+                        }
+
+                        .table td:last-child {
+                            border-bottom: 0;
+                        }
+            }
+      
+        </style>
+
+</md-content>
+
+
+

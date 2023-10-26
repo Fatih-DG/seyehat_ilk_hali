@@ -1,0 +1,56 @@
+﻿
+<style>
+    input[type=file] {
+        font-size: 100px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+    }
+</style>
+
+<md-content style="margin-top:15px;" class="animated rotateIn" ng-init="animasyon='animated infinite pulse'">
+
+    <div masonry="{ transitionDuration: '0.4s' }" load-images="true" column-width="200" >
+        <div ng-class="videolar[$index].selected?animasyon:''"  class="masonry-brick" ng-repeat="video in videolar">
+
+            <md-checkbox ng-model="videolar[$index].selected" ng-change="tumunuSec2(tumunuSec);"><span ng-bind-html="video.video | unsafe"></span></md-checkbox>
+           
+        </div>
+    </div>
+
+
+
+    <md-button ng-click="videoEkle()" type="button" class="md-raised md-primary pull-right">
+        <md-tooltip>
+            Video Galerisine Video Ekler
+        </md-tooltip>
+      Video  Ekle
+    </md-button>
+
+
+    <div layout="column" layout-align="top center" ng-show="videolar.length==0">
+        <p style="text-align:center;"><h1 class="animated infinite pulse"><a style="text-decoration:none;color:red;">Henüz Video Eklemediniz.Video Eklemek İçin Video Ekle Butonuna Tıklayınız...</a></h1></p>
+
+
+
+    </div>
+
+
+    <md-button ng-show="butonGorunurlugu(videolar)" ng-click="videolariSil()" type="button" class="md-raised md-primary pull-right">
+        <md-tooltip>
+            Seçili Videoları Siler
+        </md-tooltip>
+
+        Sil
+    </md-button>
+</md-content>
+
+<md-content flex layout-padding ng-show="videolar.length==0">
+
+
+
+
+
+
+</md-content>

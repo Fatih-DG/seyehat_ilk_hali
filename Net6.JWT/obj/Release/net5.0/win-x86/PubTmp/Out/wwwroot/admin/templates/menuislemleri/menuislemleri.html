@@ -1,0 +1,87 @@
+﻿<link href="../../Content/Css/styletable.css" rel="stylesheet" />
+<style>
+     td{
+        vertical-align:middle !important;
+    }
+</style>
+
+<div class="table-responsive-vertical shadow-z-1 animated  bounceInLeft" style="margin-top:20px;">
+
+    <table id="table" class="table table-hover table-bordered table-striped table-mc-yellow">
+        <thead>
+            <tr>
+
+                <th>  <h2><b>No</b></h2></th>
+                <th><h2><b>  {{'ACIKLAMA' | translate}}</b></h2></th>
+          
+                <th><h2><b>  {{'CEVIRIDEGISKENI' | translate}}</b></h2></th>
+
+                <th><h2><b> {{'AKTIFMI' | translate}}</b></h2></th>
+            
+
+                <th ng-if="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')"><h2><b>  {{'ISLEMLER' | translate}}</b></h2></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="menu in menuler">
+
+                <td data-title="No"><h2><b> {{$index+1}}-{{menu.id}}</b></h2></td>
+                <td ng-click="" data-title="{{'ACIKLAMA' | translate}}"><h2><b> {{menu.aciklama | substr:100}}</b></h2></td>
+           
+                <td data-title="{{'CEVIRIDEGISKENI' | translate}}"><h2><b>{{menu.ceviriDegiskeni}} </b></h2></td>
+
+                <td data-title="{{'AKTIFMI' | translate}}" md-truncate>
+                    <h2> <b><span ng-if="menu.aktifMi">{{'EVET' | translate}}</span> <span ng-if="!menu.aktifMi">{{'HAYIR' | translate}}</span></b></h2>
+</td>
+
+               
+
+                <td ng-if="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')" data-title="{{'ISLEMLER' | translate}}">
+                    <div layout="row" layout-align="end" flex>
+
+
+                        <md-menu>
+                            <md-button aria-label="Open demo menu" class="md-icon-button" ng-click="$mdMenu.open($event)">
+                                <i class="fas fa-ellipsis-v ng-scope"></i>
+                                <md-tooltip md-direction="bottom">{{'ISLEMMENUSU' | translate}}</md-tooltip>
+                            </md-button>
+
+
+                            <md-menu-content width="4">
+                                <!--<md-menu-divider></md-menu-divider>-->
+                                <md-menu-item ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')">
+                                    <md-button ng-click="menuAktiflikDegistir(menu.id,$index)">
+                                        <i class="fa fa-check-square" aria-hidden="true"></i> {{'AKTIFLIKDEGISTIR' | translate}}
+                                    </md-button>
+                                </md-menu-item>
+
+                                <md-menu-item ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')">
+                                    <md-button ng-click="sayfayaBirimAtaDialog(menu.id)">
+                                        <i class="fa fa-low-vision" aria-hidden="true"></i>  {{'SAYFAYABIRIMATA' | translate}}
+                                    </md-button>
+                                </md-menu-item>
+                                <md-menu-item ng-show="$root.iceriyorMu($root.ayarlar.roller,'Yönetici')">
+                                    <md-button ui-sref="SayfayaKullaniciAta({id:menu.id,ceviriDegiskeni:menu.ceviriDegiskeni})">
+                                        <i class="fa fa-low-vision" aria-hidden="true"></i> {{'SAYFAYAKULLANICIATA' | translate}}
+                                    </md-button>
+
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+
+                    </div>
+
+                </td>
+
+
+            </tr>
+
+
+        </tbody>
+    </table>
+
+
+
+
+</div>

@@ -1,0 +1,110 @@
+﻿
+
+
+
+
+
+
+        <form name="form" ng-submit='sifreDegistir()' style="margin-bottom:60px !important;">
+            <div class="row">
+                <div class="col col-center">
+                    <!--<h4 class="positive" style="text-align:center">{{'SIFREDEGISTIRME' | translate}}</h4>-->
+                    <p style="color:rgb(255,87,34);">{{'SIFREDEGISIKLIGIILEBILGISAYARAGIRISSIFRENIZIVEMAILSIFRENIZIDEDEGISTIRMISOLURSUNUZ' | translate}}</p>
+                    <md-input-container class="md-block">
+                        <label>{{'ESKISIFRE' | translate}}</label>
+                        <input type="password"   required  name="eskisifre" md-maxlength="50" md-minlength="7" minlength="7" maxlength="30" ng-model="sifre.eskiSifre">
+                        <!--<div ng-messages="form.eskisifre.$error" ng-messages-multiple>
+                           
+                            <div ng-message="maxlength">{{'ENFAZLA50KARAKTER' | translate}}</div>
+                            <div ng-message="minlength">{{'ENAZ7KARAKTEROLMALIDIR' | translate}}</div>
+               
+                            <div ng-message="buyukharfvalidator">{{'ENAZBIRKARAKTERBUYUKHARFICERMELIDIR' |translate}}</div>
+                            <div ng-message="rakamvalidator">{{'RAKAMICERMELIDIR' |translate}}</div>
+                            <div ng-message="kucukharfvalidator">{{'ENAZBIRKARAKTERKUCUKHARFICERMELIDIR' |translate}}</div>
+                            <div ng-message="ozelkaraktervalidator">{{'SIFRENIZENAZBIROZELKARAKTERICERMELIDIR' |translate}}</div>
+                            <div ng-message="isimvalidator">{{'SIFRENIZADINIZVEYASOYADINIZIICERMEMELIDIR' |translate}}</div>
+                            <div ng-message="boslukvalidator">{{'SIFREBOSLUKICEREMEZ' |translate}}</div>
+
+
+
+
+                        </div>-->
+
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>{{'YENISIFRE' | translate}}</label>
+                     
+
+                        <input type="password" boslukvalidator isimvalidator ozelkaraktervalidator kucukharfvalidator rakamvalidator buyukharfvalidator required name="yenisifre" md-maxlength="50" md-minlength="7" minlength="7" maxlength="30" ng-model="sifre.yeniSifre">
+                        <div ng-messages="form.yenisifre.$error" ng-messages-multiple>
+                            
+                            <div ng-message="maxlength">{{'ENFAZLA50KARAKTER' | translate}}</div>
+                            <div ng-message="minlength">{{'ENAZ7KARAKTEROLMALIDIR' | translate}}</div>
+
+                            <div ng-message="buyukharfvalidator">{{'ENAZBIRKARAKTERBUYUKHARFICERMELIDIR' |translate}}</div>
+                            <div ng-message="rakamvalidator">{{'RAKAMICERMELIDIR' |translate}}</div>
+                            <div ng-message="kucukharfvalidator">{{'ENAZBIRKARAKTERKUCUKHARFICERMELIDIR' |translate}}</div>
+                            <div ng-message="ozelkaraktervalidator">{{'SIFRENIZENAZBIROZELKARAKTERICERMELIDIR' |translate}}( {{'OZELKARAKTERLER' | translate}}  .!@#$%^&*)</div>
+                            <div ng-message="isimvalidator">{{'SIFRENIZADINIZVEYASOYADINIZIICERMEMELIDIR' |translate}}</div>
+                            <div ng-message="boslukvalidator">{{'SIFREBOSLUKICEREMEZ' |translate}}</div>
+
+
+
+
+                        </div>
+                        <!--<div ng-messages="form.iletibasligi[$index].$error">
+                        <div ng-message="required">{{'BUALANBOSOLAMAZ' | translate}}</div>
+                        <div ng-message="md-maxlength">{{'ENFAZLA500KARAKTER' | translate}}</div>
+                    </div>-->
+
+                    </md-input-container>
+                    <md-input-container class="md-block">
+                        <label>{{'YENISIFRETEKRAR' | translate}}</label>
+                       
+
+                        <input type="password" boslukvalidator isimvalidator ozelkaraktervalidator kucukharfvalidator rakamvalidator buyukharfvalidator required name="yenisifretekrar" md-maxlength="50" md-minlength="7" minlength="7" maxlength="30" ng-model="sifre.yeniSifreTekrar">
+                        <div ng-messages="form.yenisifretekrar.$error" ng-messages-multiple>
+                            
+                            <div ng-message="maxlength">{{'ENFAZLA50KARAKTER' | translate}}</div>
+                            <div ng-message="minlength">{{'ENAZ7KARAKTEROLMALIDIR' | translate}}</div>
+
+                            <div ng-message="buyukharfvalidator">{{'ENAZBIRKARAKTERBUYUKHARFICERMELIDIR' |translate}}</div>
+                            <div ng-message="rakamvalidator">{{'RAKAMICERMELIDIR' |translate}}</div>
+                            <div ng-message="kucukharfvalidator">{{'ENAZBIRKARAKTERKUCUKHARFICERMELIDIR' |translate}}</div>
+                            <div ng-message="ozelkaraktervalidator">{{'SIFRENIZENAZBIROZELKARAKTERICERMELIDIR' |translate}}( {{'OZELKARAKTERLER' | translate}}  .!@#$%^&*)</div>
+                            <div ng-message="isimvalidator">{{'SIFRENIZADINIZVEYASOYADINIZIICERMEMELIDIR' |translate}}</div>
+                            <div ng-message="boslukvalidator">{{'SIFREBOSLUKICEREMEZ' |translate}}</div>
+
+
+                        </div>
+
+                    </md-input-container>
+
+                    <section layout="row" layout-sm="column" layout-align="end end" layout-wrap>
+
+                        <md-button type="submit" style="text-transform: none !important;" class="md-raised md-warn">{{'DEGISTIR' | translate}}</md-button>
+
+                    </section>
+
+                </div>
+            </div>
+            <h4  class="positive" style="text-align:left;margin-left:10px;">{{'SIFREPOLITIKAMIZ' | translate}}</h4>
+            <div class="list list-inset">
+                <div class=" ">
+
+                   <p style="margin: 0 10px 5px;font-size:12px;font-weight:bolder; "><span style="font-size:40px;">.</span> {{'SIFRENIZENAZBIROZELKARAKTERICERMELIDIR' |translate}}  ( {{'OZELKARAKTERLER' | translate}}   .!@#$%^&* )</p>
+                    <p style="margin: 0 10px 5px;font-size:12px;font-weight:bolder; "><span style="font-size:40px;">.</span> {{'ENAZ7KARAKTEROLMALIDIR' | translate}}</p>
+                    
+                    <p style="margin: 0 10px 5px;font-size:12px;font-weight:bolder; "><span style="font-size:40px;">.</span> {{'ENAZBIRKARAKTERBUYUKHARFICERMELIDIR' | translate}}</p>
+                    <p style="margin: 0 10px 5px;font-size:12px;font-weight:bolder; "><span style="font-size:40px;">.</span> {{'ENAZBIRKARAKTERKUCUKHARFICERMELIDIR' | translate}}</p>
+                    <p style="margin: 0 10px 5px;font-size:12px;font-weight:bolder; "><span style="font-size:40px;">.</span> {{'RAKAMICERMELIDIR' | translate}}</p>
+
+                    <p style="margin: 0 10px 5px;font-size:12px;font-weight:bolder; "><span style="font-size:40px;">.</span> {{'SIFRENIZADINIZVEYASOYADINIZIICERMEMELIDIR' | translate}}</p>
+                    <p style="margin: 0 10px 5px;font-size:12px;font-weight:bolder; "><span style="font-size:40px;">.</span> {{'SIFRENIZENSONKULLANDIGINIZ3SIFREDENFARKLIOLMALIDIR' | translate}}</p>
+                    
+               
+         
+                </div>
+            </div>
+
+        </form>

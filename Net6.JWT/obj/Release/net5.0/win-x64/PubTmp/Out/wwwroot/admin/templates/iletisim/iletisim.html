@@ -1,0 +1,104 @@
+﻿
+<!--<style>
+    .bar .button.button-fab.button-fab-bottom-left, .button.button-fab.button-fab-bottom-left {
+    top: auto;
+    right: auto;
+    bottom: 16px;
+    left: 16px;
+    position: absolute;
+}
+</style>-->
+
+<ion-view view-title="{{$state.current.data.baslik | translate}}" hide-back-button="true">
+
+
+    <ion-content>
+     
+        <div class="row">
+          
+            
+
+            </div>
+        <div class="row">
+            <div class="col">
+                <form name="projectForm" ng-submit="gonder(mesaj);">
+
+                    <md-input-container class="md-block" ng-if="$root.ayarlar.enSonSecilenBirimID==9999">
+                        <label>{{'ADSOYAD' | translate}}*  </label>
+                        <input   required md-no-asterisk name="description" ng-model="mesaj.adSoyad"  >
+                        
+                    </md-input-container> 
+                    <md-input-container class="md-block" ng-if="$root.ayarlar.enSonSecilenBirimID!=9999">
+                        <label>{{'ADSOYAD' | translate}}*  </label>
+                        <input disabled required md-no-asterisk name="description"  value='{{$root.kullanici.ad + "  " + $root.kullanici.soyad }}'>
+
+                    </md-input-container>
+
+
+                    <md-input-container class="md-block" ng-if="$root.ayarlar.enSonSecilenBirimID==9999">
+                        <label>{{'TELEFON' | translate}}</label>
+                        <input ng-disabled="$root.ayarlar.enSonSecilenBirimID!=9999" required type="tel" name="clientEmail" ng-model="mesaj.tel" />
+
+
+                    </md-input-container>
+
+                    <md-input-container class="md-block" ng-if="$root.ayarlar.enSonSecilenBirimID==9999">
+                        <label>{{'EMAIL' | translate}}</label>
+                        <input required type="email" name="clientEmail" ng-model="mesaj.email"  />
+
+                       {{mesaj.email}}
+                    </md-input-container>
+
+                    <md-input-container class="md-block" ng-if="$root.ayarlar.enSonSecilenBirimID!=9999">
+                        <label>{{'EMAIL' | translate}}</label>
+                        <input required disabled type="email" name="clientEmail"  value="{{$root.kullanici.email}}" />
+
+                        {{mesaj.email}}
+                    </md-input-container>
+
+                 
+                        <div class="row">
+                            
+                            <md-input-container flex  class="md-block" >
+                                <label>{{'KONU' | translate}}</label>
+                                <md-select name="type" ng-model="mesaj.konu" required  >
+                                    <md-option selected value="Uygulama ile ilgili Fikir">{{'UYGULAMAILEILGILIFIKIR' | translate}}</md-option>
+                                    <md-option value="Uygulama sorunu">{{'UYGULAMASORUNU' | translate}}</md-option>
+                                    <md-option value="Üniversitemizle ilgili fikir veya öneri">{{'UNUVERSITEMIZILEILGILIFIKIRVEONERI' | translate}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    <div class="row">
+
+                        <md-input-container flex  class="md-block" >
+                            <label>{{'MESAJINIZ' | translate}}</label>
+                          <textarea required ng-model="mesaj.mesaj" rows="2"></textarea>
+                        </md-input-container>
+                    </div>
+                    
+
+                   
+                    <div layout="row" layout-align="end end">
+                        <md-button type="submit" class="md-raised md-primary md-button md-ink-ripple" >{{'GONDER' | translate}}</md-button>
+                    </div>
+
+
+                    <div layout="row" style="height:60px;">
+               
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+            
+             
+        </div>
+    
+    </ion-content>
+
+
+</ion-view>
+

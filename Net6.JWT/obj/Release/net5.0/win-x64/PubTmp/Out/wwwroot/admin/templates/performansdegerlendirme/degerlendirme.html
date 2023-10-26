@@ -1,0 +1,61 @@
+﻿
+
+
+<md-content layout-padding style="height:100%;">
+
+    <div layout="row" layout-align="start">
+
+        <div flex-xs flex-gt-xs="50" layout="column">
+            <md-input-container>
+                <label>Filtreleme</label>
+                <md-select ng-model="seciliBirim" >
+                    <md-optgroup label="Birim Seçiniz">
+                        <md-option ng-repeat="birim in tumBirimler" ng-value="birim"><b>{{birim}}</b></md-option>
+
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+
+    <md-grid-list md-cols="2" md-cols-sm="2" md-cols-xs="1" md-cols-md="2" md-cols-gt-md="4"
+                  md-row-height="4:3"
+                  md-gutter="20px" md-gutter-gt-sm="20px">
+        <md-grid-tile ng-repeat="kullanici in kullanicilar | filter:seciliBirim">
+            <md-card>
+                <i style="color:springgreen;position: absolute;/* text-align: center; */font-size: 30px;right: 46px;float: right;" ng-show="(kullanici.hedefDegerlendirildiMi || !kullanici.hedef) && kullanici.yetkinlikDegerlendirildiMi " class="fas fa-check ng-scope" aria-hidden="false"></i>
+
+                <md-card-title style="padding-bottom:0;">
+                    <md-card-title-text>
+                        <span style="font-size: 20px !important;" class="md-headline">{{kullanici.ad+" "+kullanici.soyad}}</span>
+                        <span class="md-subhead">{{kullanici.unvan}}</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-lg card-media" style="height:auto;">
+                            <!--<div style="color: rgb(255, 255, 255);margin-left: 30px;" id="profileImage2">{{kullanici.ad | substr:1}}{{kullanici.soyad | substr:1}}</div>-->
+                            <div class="percent-container" style="width: 100px !important;margin: 10px 40%;">
+                                <percent-circle ng-click="degerlendirenlerinPuanlari(kullanici.id)" percent="kullanici.not" speed="30"></percent-circle>
+                            </div>
+                        </div>
+                    </md-card-title-media>
+
+                </md-card-title>
+
+                <md-card-actions layout="row" layout-align="end center">
+
+                    <md-button ui-sref="HedefDegerlendirme({id:kullanici.id})" ng-if="kullanici.hedef" class="md-raised "><i style="color:springgreen;" ng-show="kullanici.hedefDegerlendirildiMi" class="fas fa-check"></i>  Hedef</md-button>
+                    <md-button ng-if="kullanici.yetkinlik" ui-sref="YetkinlikDegerlendirme({id:kullanici.id})" class="md-raised "><i style="color:springgreen;" ng-show="kullanici.yetkinlikDegerlendirildiMi" class="fas fa-check"></i>  Yetkinlik</md-button>
+                    <md-button ui-sref="Gorus({id:kullanici.id,ad:kullanici.ad,soyad:kullanici.soyad})" class="md-raised ">Görüş</md-button>
+                </md-card-actions>
+                <div>
+                    <md-input-container style="width: 100%;" ng-if="kullanici.hedef">
+                        <h6 style="text-align: center;">Hedef  Doldurma Oranı</h6>
+                        <md-slider ng-if="kullanici.hedef" flex ng-model="kullanici.formDoldurmaYuzdesi" ng-disabled="true" step="100" md-discrete
+                                   ng-readonly="true"></md-slider>
+                    </md-input-container>
+                </div>
+            </md-card>
+        </md-grid-tile>
+
+    </md-grid-list>
+</md-content>

@@ -1,0 +1,88 @@
+﻿<style>
+    md-content {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+</style>
+<md-content  ng-init="$root.baslik='Müşteri Ekleme'" class="animated  bounceInUp" >
+    <form name="projectForm" ng-submit="musteriEkle(musteri);" ng-init="musteri.email=''">
+
+        <md-input-container class="md-block">
+            <label>Firma Ünvanı</label>
+            <input md-maxlength="500" required  name="Firma Ünvanı" ng-model="musteri.firmaAciklama">
+            <div ng-messages="projectForm.description.$error">
+                <div ng-message="required">This is required.</div>
+                <div ng-message="md-maxlength">The description must be less than 30 characters long.</div>
+            </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+            <label>Adres</label>
+            <input  md-no-asterisk name=Adres" ng-model="musteri.adres">
+           
+        </md-input-container>
+        <div layout="row">
+            <md-input-container flex="50">
+                <label>Telefon Numarası</label>
+                <input md-no-asterisk name="tel" ng-model="musteri.tel">
+               
+            </md-input-container>
+            <md-input-container flex="50">
+                <label>Faks Numarası</label>
+                <input md-no-asterisk name="faks" ng-model="musteri.tel2">
+
+            </md-input-container>
+            <!--<md-input-container flex="50">
+                <label>Fax</label>
+                <md-select name="type" ng-model="musteri.tel2" required>
+                    <md-option value="app">Application</md-option>
+                    <md-option value="web">Website</md-option>
+                </md-select>
+            </md-input-container>-->
+        </div>
+        <div layout="row">
+            <md-input-container flex="50">
+                <label>Vergi Dairesi</label>
+                <input  name="vergidairesi" ng-model="musteri.vergiDairesi">
+
+            </md-input-container>
+            <md-input-container flex="50">
+                <label>Vergi No</label>
+                <input  name="vergino" ng-model="musteri.vergiNo">
+
+            </md-input-container>
+            <!--<md-input-container flex="50">
+            <label>Fax</label>
+            <md-select name="type" ng-model="musteri.tel2" required>
+                <md-option value="app">Application</md-option>
+                <md-option value="web">Website</md-option>
+            </md-select>
+        </md-input-container>-->
+        </div>
+
+        <md-input-container class="md-block">
+            <label>Email</label>
+            <input  type="email" name="Email" ng-model="musteri.email"
+                   minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+
+            <div ng-messages="projectForm.clientEmail.$error" role="alert">
+                <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                 Email adresiniz 10 ve 100 karakter arasında olmalı.
+                </div>
+            </div>
+        </md-input-container>
+
+        
+
+      
+
+    
+        <div layout="row" layout-align="end" flex>
+
+            <md-button class="md-raised md-primary" type="submit">Kaydet</md-button>
+        </div>
+
+      
+    </form>
+</md-content>

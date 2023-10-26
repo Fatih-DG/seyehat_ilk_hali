@@ -1,0 +1,220 @@
+﻿
+
+<div class="table-responsive-vertical shadow-z-1 animated  bounceInLeft" style="margin-top:20px;" ng-init="$root.baslik='Kontrol Tarihi Yaklaşan Cihazlar'">
+    <!-- Table starts here -->
+    <table id="table" class="table table-hover table-bordered table-striped table-mc-yellow" ng-show="kontrolEdilecekTupler.length>0">
+        <thead>
+            <tr>
+                <th>  <h2><b>Sıra No</b></h2></th>
+                <th><h2><b>  Müşteri</b></h2></th>
+                <th><h2><b>  Açıklama</b></h2></th>
+
+                <th><h2><b>  Dolum Yapıldığı Tarih</b></h2></th>
+                <th><h2><b>  Kontrol 1</b></h2></th>
+                <th><h2><b>  Kontrol 2</b></h2></th>
+                <th><h2><b>  Kontrol 3</b></h2></th>
+                <th><h2><b>  Tekrar Dolum Tarihi</b></h2></th>
+                <th><h2><b>  Bakım İçin Kalan Gün Sayısı</b></h2></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="kontrol in kontrolEdilecekTupler">
+                <td data-title="Sıra No"><h2><b> {{$index+1}}</b></h2></td>
+                <td data-title="Müşteri" ng-click="$root.getFirmaBilgileri(kontrol.musteriId)"><a><h2><b>  {{kontrol.firmaAciklama}}</b></h2></a></td>
+                <td data-title="Açıklama"><h2><b ng-bind-html="kontrol.aciklama | unsafe">  </b></h2></td>
+
+                <td data-title="Dolum Yapıldığı Tarih" md-truncate>
+
+
+                    <h2><b>    {{kontrol.dolumTarihi | tarihCevir}}</b>  </h2>
+                </td>
+                <td data-title="Kontrol 1">
+
+
+                    <div layout="row" layout-align="center" flex>
+                        <div ng-show="!kontrol.kontrol1 && kontrol.kalanGunSayisi<0">
+                            <md-menu>
+                                <div aria-label="Open phone interactions menu" ng-click="openMenu($mdMenu, $event)">
+
+                                    <md-tooltip md-direction="bottom">Kontrol Tarihi Geçti.></md-tooltip><md-tooltip md-direction="top">Periyodik Bakım Tarihi:{{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:1}}</md-tooltip><img height="50" width="50" src="../../Scripts/ZO/Css/uncheck.svg" />
+
+                                </div>
+                                <md-menu-content width="4">
+                                    <!--<md-menu-divider></md-menu-divider>-->
+                                    <md-menu-item>
+                                        <md-button ng-click="$root.kontrolYapildiDialog(kontrol.id,1)">
+                                            <i class="fas fa-flag-checkered"></i> Kontrol Yapıldı Olarak İşaretle.
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                        <div ng-show="kontrol.kontrol1">
+                            <md-tooltip md-direction="bottom">Kontrol Yapıldı.</md-tooltip> <md-tooltip md-direction="top">Kontrol Edildiği Tarih:{{kontrol.kontrol1YapildigiTarih | tarihCevir}}</md-tooltip>  <img src="../../Scripts/ZO/Css/check.svg" />
+                        </div>
+                        <div ng-show="!kontrol.kontrol1 &&  kontrol.kalanGunSayisi>0">
+
+                            <md-menu>
+                                <div aria-label="Open phone interactions menu" ng-click="openMenu($mdMenu, $event)">
+
+                                    <md-tooltip md-direction="bottom">Kontrol Tarihi Henüz Geçmedi.</md-tooltip> <md-tooltip md-direction="top">Periyodik Bakım Tarihi:{{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:1}}</md-tooltip>  <img height="50" width="50" src="../../Scripts/ZO/Css/check2.svg" />
+
+                                </div>
+                                <md-menu-content width="4">
+                                    <!--<md-menu-divider></md-menu-divider>-->
+                                    <md-menu-item>
+                                        <md-button ng-click="kontrolYapildiDialog(kontrol.id,1)">
+                                            <i class="fas fa-flag-checkered"></i> Kontrol Yapıldı Olarak İşaretle.
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+                <td data-title="Kontrol 2">
+                    <div layout="row" layout-align="center" flex>
+                        <div ng-show="!kontrol.kontrol2 && kontrol.kalanGunSayisi<0">
+
+                            <div ng-if="!kontrol.kontrol1">
+                                <md-tooltip md-direction="bottom">Kontrol Tarihi Geçti.</md-tooltip><md-tooltip md-direction="top">Periyodik Bakım Tarihi:{{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:2}}</md-tooltip><img height="50" width="50" src="../../Scripts/ZO/Css/uncheck.svg" />
+
+                            </div>
+
+                            <md-menu ng-if="kontrol.kontrol1">
+                                <div aria-label="Open phone interactions menu" ng-click="openMenu($mdMenu, $event)">
+
+                                    <md-tooltip md-direction="bottom">Kontrol Tarihi Geçti.</md-tooltip><md-tooltip md-direction="top">Periyodik Bakım Tarihi:{{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:2}}</md-tooltip><img height="50" width="50" src="../../Scripts/ZO/Css/uncheck.svg" />
+
+                                </div>
+                                <md-menu-content width="4">
+                                    <!--<md-menu-divider></md-menu-divider>-->
+                                    <md-menu-item>
+                                        <md-button ng-click="kontrolYapildiDialog(kontrol.id,2)">
+                                            <i class="fas fa-flag-checkered"></i> Kontrol Yapıldı Olarak İşaretle.
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>
+                        <div ng-show="kontrol.kontrol2">
+                            <md-tooltip md-direction="bottom">Kontrol Yapıldı.</md-tooltip>  <md-tooltip md-direction="top">Kontrol Edildiği Tarih:{{kontrol.kontrol2YapildigiTarih  | tarihCevir}}</md-tooltip><img src="../../Scripts/ZO/Css/check.svg" />
+                        </div>
+                        <div ng-show="!kontrol.kontrol2 &&  kontrol.kalanGunSayisi>0">
+
+                            <div ng-if="!kontrol.kontrol1">
+                                <md-tooltip md-direction="bottom">Kontrol Tarihi Henüz Geçmedi.</md-tooltip><md-tooltip md-direction="top">Periyodik Bakım Tarihi:{{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:2}}</md-tooltip>   <img height="50" width="50" src="../../Scripts/ZO/Css/check2.svg" />
+
+                            </div>
+
+                            <md-menu ng-if="kontrol.kontrol1">
+                                <div aria-label="Open phone interactions menu" ng-click="openMenu($mdMenu, $event)">
+
+                                    <md-tooltip md-direction="bottom">Kontrol Tarihi Henüz Geçmedi.</md-tooltip><md-tooltip md-direction="top">Periyodik Bakım Tarihi:{{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:2}}</md-tooltip>   <img height="50" width="50" src="../../Scripts/ZO/Css/check2.svg" />
+
+                                </div>
+                                <md-menu-content width="4">
+                                    <!--<md-menu-divider></md-menu-divider>-->
+                                    <md-menu-item>
+                                        <md-button ng-click="kontrolYapildiDialog(kontrol.id,2)">
+                                            <i class="fas fa-flag-checkered"></i> Kontrol Yapıldı Olarak İşaretle.
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+                        </div>
+                    </div>
+
+                </td>
+                <td data-title="Kontrol 3">
+                    <div layout="row" layout-align="center" flex>
+                        <div ng-show="!kontrol.kontrol3 && kontrol.kalanGunSayisi<0">
+
+                            <div ng-if="!kontrol.kontrol2 || !kontrol.kontrol1">
+                                <md-tooltip md-direction="bottom">Kontrol Tarihi Geçti.</md-tooltip><md-tooltip md-direction="top"> Periyodik Bakım Tarihi: {{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:3}}</md-tooltip><img height="50" width="50" src="../../Scripts/ZO/Css/uncheck.svg" />
+
+
+                            </div>
+                            <md-menu ng-if="kontrol.kontrol2 && kontrol.kontrol1">
+                                <div aria-label="Open phone interactions menu" ng-click="openMenu($mdMenu, $event)">
+
+                                    <md-tooltip md-direction="bottom">Kontrol Tarihi Geçti.</md-tooltip><md-tooltip md-direction="top"> Periyodik Bakım Tarihi: {{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:3}}</md-tooltip><img height="50" width="50" src="../../Scripts/ZO/Css/uncheck.svg" />
+
+                                </div>
+                                <md-menu-content width="4">
+                                    <!--<md-menu-divider></md-menu-divider>-->
+                                    <md-menu-item>
+                                        <md-button ng-click="kontrolYapildiDialog(kontrol.id,3)">
+                                            <i class="fas fa-flag-checkered"></i> Kontrol Yapıldı Olarak İşaretle.
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+                        </div>
+                        <div ng-show="kontrol.kontrol3">
+                            <md-tooltip md-direction="bottom">Kontrol Yapıldı.</md-tooltip> <md-tooltip md-direction="top">Kontrol Edildiği Tarih:{{kontrol.kontrol3YapildigiTarih | tarihCevir}}</md-tooltip> <img src="../../Scripts/ZO/Css/check.svg" />
+                        </div>
+                        <div ng-show="!kontrol.kontrol3 &&  kontrol.kalanGunSayisi>0">
+                            <div ng-if="!kontrol.kontrol2 || !kontrol.kontrol1">
+
+                                <md-tooltip md-direction="bottom">Kontrol Tarihi Henüz Geçmedi.</md-tooltip>  <md-tooltip md-direction="top">Periyodik Bakım Tarihi:{{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:3}}</md-tooltip> <img height="50" width="50" src="../../Scripts/ZO/Css/check2.svg" />
+
+                            </div>
+
+                            <md-menu ng-if="kontrol.kontrol2 && kontrol.kontrol1">
+                                <div aria-label="Open phone interactions menu" ng-click="openMenu($mdMenu, $event)">
+
+
+                                    <md-tooltip md-direction="bottom">Kontrol Tarihi Henüz Geçmedi.</md-tooltip>  <md-tooltip md-direction="top">Periyodik Bakım Tarihi:{{kontrol.dolumTarihi | bakimTarihiBul:kontrol.periyodikBakimAraligi:3}}</md-tooltip> <img height="50" width="50" src="../../Scripts/ZO/Css/check2.svg" />
+
+                                </div>
+                                <md-menu-content width="4">
+
+
+                                    <!--<md-menu-divider></md-menu-divider>-->
+                                    <md-menu-item>
+                                        <md-button ng-click="kontrolYapildiDialog(kontrol.id,3)">
+                                            <i class="fas fa-flag-checkered"></i> Kontrol Yapıldı Olarak İşaretle.
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+                        </div>
+
+
+                    </div>
+
+                </td>
+                <td data-title="Tekrar Dolum Tarihi"> <h3><b>   {{kontrol.tekrarDolumTarihi | tarihCevir}}</b>  </h3></td>
+                <td data-title="Bakım İçin Kalan Gün Sayısı"> <h1><b> <span ng-if="kontrol.kalanGunSayisi<0">Bakım Tarihinden <span style="color:red;">{{kontrol.kalanGunSayisi*-1}}</span> Gün Geçti.</span><span ng-if="kontrol.kalanGunSayisi>0">Bakıma<span style="color:green;"> {{kontrol.kalanGunSayisi}} </span> Gün Kaldı.</span>   </b> </h1></td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+<md-content  flex layout-padding ng-show="kontrolEdilecekTupler.length==0">
+
+
+
+    <div layout="column" layout-align="top center">
+        <p style="text-align:center;"><h1 class="animated infinite pulse"><a ui-sref="KontrolEkleme" style="text-decoration:none;color:red;">Henüz Kontrol Eklemediniz.Kontrol Eklemek İçin Tıklayınız...</a></h1></p>
+
+
+
+</div>
+
+
+</md-content>

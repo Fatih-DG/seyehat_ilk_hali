@@ -1,0 +1,48 @@
+﻿<md-dialog  style="min-width:320px;">
+    <form ng-cloak>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{"BEGENENLERBASLIK" | translate}}</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <md-icon md-svg-src="img/icons/ic_close_24px.svg" aria-label="Close dialog"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content >
+            <md-list flex  infinite-scroll='sayfalama()' infinite-scroll-disabled='mesgulMu' infinite-scroll-distance='2'>
+                
+                <md-list-item class="md-3-line"  ng-click="null" ng-repeat="begenen in begenenler">
+                   
+                    <img id="profileImage" ng-if="begenen.profilResmi!=null" ng-src="{{begenen.profilResmi}}">
+                    <div ng-if="begenen.profilResmi==null" style="background-color:#793658; color: rgb(255, 255, 255);" id="profileImage" class="ng-binding">{{begenen.begenenAd | substr:1}}{{begenen.begenenSoyad | substr:1}}</div>
+                    <div class="md-list-item-text" layout="column">
+                        <h3>&nbsp;&nbsp;{{begenen.begenenAd+" "+begenen.begenenSoyad}}</h3>
+                   
+                    
+
+                    </div>
+                    <md-divider></md-divider>
+                </md-list-item>
+               
+         
+             
+              
+                </md-list>
+</md-dialog-content>
+
+        <md-dialog-actions layout="row">
+         
+            <!--<md-button ng-click="answer('not useful')">
+                Not Useful
+            </md-button>
+            <md-button ng-click="answer('useful')">
+                Useful
+            </md-button>
+            <md-button ng-click="answer('useful')">
+                Useful
+            </md-button>-->
+        </md-dialog-actions>
+    </form>
+</md-dialog>
